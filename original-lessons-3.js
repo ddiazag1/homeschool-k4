@@ -125,7 +125,7 @@ window.LESSONS = (window.LESSONS || []).concat([
 <p>Painted again and again on those walls is something extraordinary: young people vaulting over the horns of a charging bull.</p>
 <p>Nobody is certain what bull-leaping was. A religious ritual, a test of courage, a sport? We know only that it mattered enormously to them.</p>
 <p>Later Greeks told a story about Crete: that under the palace ran a maze called the Labyrinth, and in it lived the <strong>Minotaur</strong>, half man and half bull, fed on young people sent from Athens, until the hero Theseus killed it.</p>
-<p>It is a legend. But legends often keep the shape of something real — a maze-like palace of a thousand rooms, a kingdom that demanded tribute, and bulls everywhere in the art. The Greeks remembered Crete as powerful and frightening long after it was gone.</p>
+<p>It is a legend. But legends often keep the shape of something real. There was a maze-like palace of a thousand rooms. There was a kingdom that demanded tribute. And there were bulls everywhere in the art. The Greeks remembered Crete as powerful and frightening long after it was gone.</p>
 <h3>How It Ended</h3>
 <p>Around 1600 BC a volcano on the nearby island of Thera exploded — one of the largest eruptions in human history. Ash fell on Crete. Waves hit the coast. Ships and harbours were destroyed.</p>
 <p>The Minoans did not vanish, but they never fully recovered, and within a couple of centuries the mainland Mycenaeans were running Crete.</p>
@@ -169,7 +169,7 @@ window.LESSONS = (window.LESSONS || []).concat([
 <h3>Hatshepsut</h3>
 <p>When her husband died, <strong>Hatshepsut</strong> was supposed to mind the throne for a small stepson until he grew up.</p>
 <p>Instead she took it. Around 1479 BC she had herself crowned pharaoh outright — not queen, pharaoh, the full title.</p>
-<p>Egypt had no word or image for a female king, so she used the existing one. Her statues show her in a pharaoh's headdress with a pharaoh's ceremonial false beard. She was not pretending to be a man; she was wearing the uniform of the office, because that was the only uniform there was.</p>
+<p>Egypt had no word for a female king. It had no picture of one either. So she used the one that existed. Her statues show her in a pharaoh's headdress and a pharaoh's ceremonial false beard. She was not pretending to be a man. She was wearing the uniform of the job, because that was the only uniform there was.</p>
 <p>She ruled for about twenty years and mostly did not go to war. She sent a famous trading expedition far south to a land called Punt, which came home with incense trees, gold, ebony and live baboons. She built a temple against the cliffs at Deir el-Bahari that is still one of the most beautiful buildings in Egypt.</p>
 <p>After her death, someone went around chiselling her name and face off monuments. Probably her stepson, Thutmose III, late in his own reign. For three thousand years she was very nearly erased — and archaeologists put her back together from the fragments.</p>
 <h3>The Pharaoh Who Changed the Gods</h3>
@@ -177,7 +177,7 @@ window.LESSONS = (window.LESSONS || []).concat([
 <p>Egypt hated it. Priests lost their positions, ordinary people lost festivals and gods their families had prayed to for centuries. When he died, it was undone almost immediately.</p>
 <h3>The Boy Everyone Knows</h3>
 <p>Akhenaten's successor was a child named <strong>Tutankhamun</strong>, who restored the old gods, reigned about nine years, and died around eighteen.</p>
-<p>He was a minor pharaoh. He is world-famous for one reason only: his tomb was small, quickly covered over, and forgotten — so when Howard Carter found it in 1922 it was still full of treasure, while the tombs of Egypt's greatest rulers had been emptied by robbers long ago.</p>
+<p>He was a minor pharaoh. He is world-famous for one reason. His tomb was small. It was covered over quickly and then forgotten. So when Howard Carter found it in 1922, it was still full of treasure. The tombs of Egypt's greatest rulers had been emptied by robbers long before.</p>
 <p>Being remembered is not the same as being important. Sometimes it is just luck.</p>`,
  discussion:["Why did Hatshepsut wear a pharaoh's false beard?",
              "Why would ordinary Egyptians resent Akhenaten's new religion?",
@@ -191,7 +191,7 @@ window.LESSONS = (window.LESSONS || []).concat([
  id:1011, type:"history", topic:"Ancient Israel", title:"The Exodus Story", readingTime:"5 min",
  story:`<h2>The Exodus Story</h2>
 <p>Hundreds of years after Joseph brought his family to Egypt, their descendants were still there — and no longer guests. According to the Hebrew Bible, the Israelites had become <strong>slaves</strong>, worked hard on Pharaoh's building projects.</p>
-<p>This is the story as the tradition tells it. As with Abraham, historians take it seriously as something a people remembered about themselves, while noting that we have no Egyptian record of it and no direct archaeological evidence. What is certain is that this story shaped the Jewish people more than any other.</p>
+<p>This is the story as the tradition tells it. As with Abraham, historians take it seriously. It is something a people remembered about themselves. But there is no Egyptian record of it, and no direct evidence from the ground. What is certain is that this story shaped the Jewish people more than any other.</p>
 <h3>The Baby in the Basket</h3>
 <p>Pharaoh, afraid the Israelites were growing too numerous, ordered their baby boys killed. One mother hid her son, then set him in a waterproofed basket among the reeds of the Nile.</p>
 <p>Pharaoh's own daughter found him and raised him in the palace. She named him <strong>Moses</strong>.</p>
@@ -204,8 +204,8 @@ window.LESSONS = (window.LESSONS || []).concat([
 <p>Jewish families still retell this night every year at <strong>Passover</strong>. It is among the oldest continuously observed traditions on Earth — thousands of years of the same story, told at the same meal.</p>
 <h3>Rules for a Free People</h3>
 <p>They did not arrive anywhere quickly; the story gives them forty years in the desert. On a mountain, Moses received the <strong>Ten Commandments</strong> — laws about not murdering, not stealing, not lying, honouring parents, and worshipping one God alone.</p>
-<p>Compare that with Hammurabi. His code was a king telling subjects what would happen to them. These commandments are presented as an agreement a whole people accepted — and they bind everyone, including the leaders.</p>
-<p>That idea — that rules apply to the powerful too — is one of the most consequential ideas in human history, and it is still being argued about today.</p>`,
+<p>Compare that with Hammurabi. His code was a king telling his subjects what would happen to them. These commandments are different. They are an agreement a whole people accepted. And they bind everyone, including the leaders.</p>
+<p>That idea is one of the most important in human history: rules apply to the powerful too. People are still arguing about it today.</p>`,
  discussion:["Why do you think people retell this story every year for thousands of years?",
              "How is 'a whole people agrees to rules' different from 'a king announces rules'?",
              "Why do historians say 'the story tells us' instead of 'this happened'?"],
