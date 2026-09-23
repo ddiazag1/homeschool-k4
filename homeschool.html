@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Homeschool — K–4 Enrichment</title>
+<meta name="theme-color" content="#0f1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Homeschool">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+:root{
+  --bg:#0f1117; --panel:#161a24; --panel2:#1d2230; --line:#2a3040;
+  --txt:#e8ecf5; --dim:#8b93a7; --accent:#6c8cff; --good:#3ddc84; --bad:#ff5d6c;
+  --gold:#ffc83d; --hist:#e0803c; --sci:#3dc9d4; --body:#c77dff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.55}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 18px 70px}
+.screen{display:none}.screen.on{display:block;animation:f .25s}
+@keyframes f{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h1{font-size:26px;margin:0}h2{font-size:20px;margin:0 0 12px}
+.dim{color:var(--dim)}.sm{font-size:13px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.btn{border:0;cursor:pointer;font:inherit;font-weight:700;background:var(--accent);color:#fff;
+  padding:11px 18px;border-radius:10px;font-size:15px;transition:filter .12s}
+.btn:hover{filter:brightness(1.12)}
+.btn.g{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--txt)}
+.btn.ok{background:var(--good);color:#04240f}.btn.no{background:var(--bad)}
+.btn.sm{padding:7px 12px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.08);color:var(--dim)}
+.tag.history{background:rgba(224,128,60,.18);color:var(--hist)}
+.tag.science{background:rgba(61,201,212,.18);color:var(--sci)}
+.tag.body{background:rgba(199,125,255,.18);color:var(--body)}
+.tag.gap{background:rgba(255,93,108,.18);color:var(--bad)}
+.tag.warn{background:rgba(255,200,61,.18);color:var(--gold)}
+input,select,textarea{font:inherit;background:#0d1017;border:1px solid var(--line);color:var(--txt);
+  padding:10px 12px;border-radius:9px;width:100%}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--accent)}
+label{display:block;font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.7px;margin:14px 0 5px}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.kid{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;position:relative}
+.kid .av{font-size:38px}.kid .nm{font-weight:800;margin-top:4px}
+.kid .ed{position:absolute;top:6px;right:6px;background:none;border:0;color:var(--dim);cursor:pointer;font-size:13px}
+.kid.add{border-style:dashed;cursor:pointer;display:flex;flex-direction:column;justify-content:center;
+  align-items:center;min-height:120px;color:var(--dim)}
+.avpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;margin-top:6px}
+.avpick div{font-size:26px;text-align:center;padding:6px 0;border-radius:9px;cursor:pointer;background:#0d1017;border:2px solid transparent}
+.avpick div.on{border-color:var(--accent)}
+.steps{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.step{flex:1;min-width:90px;padding:8px 6px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
+  font-size:11px;font-weight:700;text-align:center;color:var(--dim)}
+.step.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.done{color:var(--good);border-color:rgba(61,220,132,.4)}
+.story{background:#12151d;border:1px solid var(--line);border-radius:12px;padding:22px;
+  max-height:58vh;overflow-y:auto;font-size:18px}
+.story.big{font-size:22px;line-height:1.75}
+.story h2{font-size:24px;color:var(--gold)}.story h3{font-size:19px;color:var(--accent);margin-top:20px}
+.story img{max-width:100%;border-radius:10px;margin:10px 0}
+.story .image-caption{font-size:13px;color:var(--dim);margin-top:-4px}
+.q{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.q .qt{font-size:18px;font-weight:700;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:#0d1017;border:1px solid var(--line);color:var(--txt);
+  padding:11px 14px;border-radius:9px;margin-bottom:7px;cursor:pointer;font:inherit}
+.opt:hover{border-color:var(--accent)}
+.opt.right{background:rgba(61,220,132,.2);border-color:var(--good)}
+.opt.wrong{background:rgba(255,93,108,.2);border-color:var(--bad)}
+.bar{height:7px;background:#0d1017;border-radius:7px;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--good),var(--accent))}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
+.unit{padding:9px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.unit b{min-width:190px}
+.empty{color:var(--dim);text-align:center;padding:26px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--panel2);
+  border:1px solid var(--line);padding:11px 20px;border-radius:30px;font-weight:700;z-index:50}
+
+.fact{padding:9px 0;border-bottom:1px solid var(--line);font-size:17px}
+.fact:last-child{border-bottom:0}
+.tag.t1{background:rgba(61,220,132,.18);color:var(--good)}
+.tag.t2{background:rgba(108,140,255,.2);color:var(--accent)}
+.tag.t3{background:rgba(199,125,255,.2);color:var(--body)}
+.ans{color:var(--good);font-weight:700;font-size:15px;margin:-4px 0 10px}
+.ansinline{color:var(--good);font-weight:700}
+
+/* ---------- phone ---------- */
+@media (max-width:640px){
+  .wrap{padding:14px 12px calc(96px + env(safe-area-inset-bottom))}
+  h1{font-size:20px}h2{font-size:18px}
+  .btn{padding:13px 16px;font-size:16px;min-height:48px}
+  .btn.sm{padding:10px 13px;font-size:14px;min-height:42px}
+  .card{padding:14px;border-radius:12px}
+  .story{padding:15px;max-height:none;font-size:19px}
+  .story.big{font-size:23px;line-height:1.8}
+  .story h2{font-size:22px}.story h3{font-size:18px}
+  .opt{padding:15px 14px;font-size:17px;margin-bottom:9px}
+  .q{padding:14px}.q .qt{font-size:19px}
+  .step{min-width:0;flex:1;font-size:10px;padding:7px 2px;letter-spacing:-.2px}
+  .kids{grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:10px}
+  .kid .av{font-size:32px}
+  .unit b{min-width:0;width:100%}
+  .top{margin-bottom:14px}
+  input,select,textarea{padding:13px 12px;font-size:16px}
+  table{font-size:13px}
+  .sessnav{position:fixed;left:0;right:0;bottom:0;margin:0!important;z-index:30;
+    background:var(--panel);border-top:1px solid var(--line);
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom));gap:10px}
+  .sessnav .btn{flex:1;margin:0}
+}
+@media (hover:none){ .btn:active{filter:brightness(1.3)} .opt:active{border-color:var(--accent)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HOME -->
+<section id="home" class="screen on">
+  <div class="top">
+    <div><h1>🏫 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills</div></div>
+    <div class="row">
+      <button class="btn g sm" onclick="show('seq')">📚 Sequence</button>
+      <button class="btn g sm" onclick="show('prog')">📊 Progress</button>
+      <button class="btn g sm" onclick="show('log')">📓 Logbook</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Learners</h2>
+    <div class="kids" id="kidList"></div>
+  </div>
+
+  <div class="card" id="tonightCard"></div>
+</section>
+
+<!-- SESSION -->
+<section id="sess" class="screen">
+  <div class="top">
+    <button class="btn g sm" onclick="quitSession()">← Home</button>
+    <div id="sessTitle" style="font-weight:800"></div>
+    <button class="btn g sm" onclick="toggleBig()">🔎 Text size</button>
+  </div>
+  <div class="steps" id="steps"></div>
+  <div id="blockBody"></div>
+  <div class="row sessnav" style="margin-top:16px;justify-content:space-between">
+    <button class="btn g" id="prevBtn" onclick="stepBy(-1)">Back</button>
+    <button class="btn" id="nextBtn" onclick="stepBy(1)">Next →</button>
+  </div>
+</section>
+
+<!-- SEQUENCE -->
+<section id="seq" class="screen">
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📚 Scope &amp; Sequence</h1><span></span></div>
+  <div id="seqBody"></div>
+</section>
+
+<!-- PROGRESS -->
+<section id="prog" class="screen">
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📊 Progress</h1><span></span></div>
+  <div id="progBody"></div>
+</section>
+
+<!-- LOGBOOK -->
+<section id="log" class="screen">
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📓 Narration logbook</h1><span></span></div>
+  <div id="logBody"></div>
+</section>
+
+<!-- KID EDITOR -->
+<section id="kid" class="screen">
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Cancel</button><h1 id="kidTitle">Learner</h1><span></span></div>
+  <div class="card" style="max-width:520px">
+    <label>Name</label><input id="kName" maxlength="18" placeholder="Name">
+    <label>Character</label><div class="avpick" id="kAv"></div>
+    <label>Grade</label>
+    <select id="kGrade" onchange="suggestTiers()">
+      <option value="K">Kindergarten</option><option value="1">1st grade</option>
+      <option value="2">2nd grade</option><option value="3">3rd grade</option>
+      <option value="4">4th grade</option><option value="5">5th grade</option>
+    </select>
+    <div class="dim sm" style="margin-top:6px">Grade only suggests starting tiers — you can override each one below.</div>
+    <label>Tier per strand</label>
+    <div class="row">
+      <div style="flex:1;min-width:150px"><div class="sm dim">History</div><select id="tHistory"></select></div>
+      <div style="flex:1;min-width:150px"><div class="sm dim">Science</div><select id="tScience"></select></div>
+      <div style="flex:1;min-width:150px"><div class="sm dim">Body &amp; life</div><select id="tBody"></select></div>
+    </div>
+    <div class="row" style="margin-top:20px;justify-content:flex-end">
+      <button class="btn no sm" id="delBtn" onclick="delKid()">Delete</button>
+      <button class="btn" onclick="saveKid()">Save</button>
+    </div>
+  </div>
+</section>
+
+</div>
+<script src="curriculum-data.js"></script>
+<script src="knowledge-cards.js"></script>
+<script>
+/* ============================================================
+   Homeschool — K–4 enrichment, one-stop app
+   Content spine: the 90-lesson Bedtime Curriculum (yours).
+   Cross-references: CKHG (CC BY-NC-SA 3.0), SOTW (optional).
+   ============================================================ */
+
+const AV = ["🦊","🐯","🐼","🐸","🐧","🦁","🚀","⚡","🦉","🐵","🐲","🦕","🐙","🦈","🌟","🤖"];
+const TIERS = [
+  {id:1, name:"T1 — Name & Notice",      hint:"identify, sort, recall"},
+  {id:2, name:"T2 — Explain & Sequence", hint:"explain why, order, label"},
+  {id:3, name:"T3 — Mechanism & Compare",hint:"how it works, compare, defend"}
+];
+const STRANDS = {history:"History & Geography", science:"Science", body:"Body, Health & Life Skills"};
+const ROTATION = ["science","science","history","history","body"];   // Mon–Fri
+
+/* ---------- the 4-year sequence (see SCOPE-AND-SEQUENCE.md) ---------- */
+const SEQ = {
+ 1:{
+  history:[
+   {u:"Maps & Our World", l:[], ck:"CKHG K U1 · G1 U1 · G4 U1"},
+   {u:"Mesopotamia", l:[47], ck:"CKHG G1 U2"},
+   {u:"Ancient Egypt", l:[46], ck:"CKHG G1 U3"},
+   {u:"Ancient Israel & World Religions", l:[], ck:"CKHG G1 U4", s:1},
+   {u:"Ancient India", l:[51], ck:"CKHG G2 U1"},
+   {u:"Ancient China", l:[48], ck:"CKHG G2 U2 · G4 U6"},
+   {u:"Phoenicia & the Alphabet", l:[52], ck:"—"},
+   {u:"Ancient Greece", l:[49], ck:"CKHG G2 U4"},
+   {u:"Persia & Alexander", l:[53,54], ck:"—"},
+   {u:"Ancient Rome", l:[50], ck:"CKHG G3 U2"},
+   {u:"Early Americas", l:[55,56,57], ck:"CKHG G1 U5 · G5 U2"},
+   {u:"World Rivers & Civilization", l:[], ck:"CKHG G3 U1"}],
+  science:[
+   {u:"Thinking Like a Scientist", l:[45]},
+   {u:"Living Things", l:[2]},
+   {u:"Plants", l:[29,30]},
+   {u:"Animals & Classification", l:[31,32]},
+   {u:"Habitats", l:[6,35,36]},
+   {u:"Life Cycles", l:[7]},
+   {u:"Food Chains & Energy", l:[8]},
+   {u:"Great Animal Journeys", l:[40]},
+   {u:"Deep Time & Fossils", l:[33,4], s:1},
+   {u:"Microbes & Soil", l:[43,44]},
+   {u:"Heredity & Traits", l:[], ck:"CKSci + original"},
+   {u:"Ecosystems & Fresh Water", l:[34,41]}],
+  body:[
+   {u:"Skeleton & Muscles", l:[9]},
+   {u:"Heart, Lungs & Blood", l:[], ck:"NIH/NLM + original"},
+   {u:"Food & Digestion", l:[10]},
+   {u:"The Five Senses", l:[11]},
+   {u:"Brain & Sleep", l:[], ck:"NIH + your expertise"},
+   {u:"Safety & First Aid", l:[], ck:"Red Cross/CDC + original"}]},
+ 2:{
+  history:[
+   {u:"Feudal Japan", l:[58], ck:"CKHG G5 U8"},
+   {u:"The Vikings", l:[59], ck:"CKHG G3 U3"},
+   {u:"Castles & Knights", l:[60], ck:"CKHG G4 U3"},
+   {u:"Islamic Golden Age", l:[61], ck:"CKHG G4 U4", s:1},
+   {u:"The Mongols", l:[62], ck:"—"},
+   {u:"The Black Death", l:[63], ck:"—"},
+   {u:"Medieval African Kingdoms", l:[], ck:"CKHG G4 U5"},
+   {u:"Early Russia", l:[], ck:"CKHG G5 U7"},
+   {u:"Canada & the North", l:[], ck:"CKHG G3 U5"}],
+  science:[
+   {u:"The Sun & Its Family", l:[1]},
+   {u:"Water & Rain", l:[3]},
+   {u:"Volcanoes", l:[12]},
+   {u:"Earthquakes", l:[13]},
+   {u:"The Ocean", l:[14]},
+   {u:"How Mountains Are Made", l:[15]},
+   {u:"Seasons", l:[16]},
+   {u:"Wild Weather", l:[17]},
+   {u:"Snow & Ice", l:[18]},
+   {u:"The Moon", l:[19]},
+   {u:"Stars & Constellations", l:[20]},
+   {u:"Space Travel", l:[21]},
+   {u:"Galaxies & the Universe", l:[37]},
+   {u:"Hot & Cold", l:[39]}],
+  body:[
+   {u:"Nervous System & Senses", l:[], ck:"NIH + original"},
+   {u:"Germs & Immunity", l:[], ck:"CDC + original"},
+   {u:"Fitness & Movement", l:[], ck:"original"},
+   {u:"Emotions & Self-Regulation", l:[], ck:"original"},
+   {u:"Cooking & Kitchen Skills", l:[], ck:"original"},
+   {u:"Digital Citizenship", l:[], ck:"original"}]},
+ 3:{
+  history:[
+   {u:"The Renaissance", l:[64], ck:"CKHG G5 U4"},
+   {u:"Leonardo da Vinci", l:[65], ck:"—"},
+   {u:"Age of Exploration", l:[66,67], ck:"CKHG G5 U3"},
+   {u:"The Printing Press", l:[68], ck:"—"},
+   {u:"The Reformation", l:[69], ck:"CKHG G5 U5", s:1},
+   {u:"Mughal India", l:[70], ck:"—"},
+   {u:"The Ottoman Empire", l:[71], ck:"—"},
+   {u:"England's Golden Age", l:[], ck:"CKHG G5 U6"},
+   {u:"Colonial America", l:[72], ck:"CKHG G3 U7 · G1 U7"},
+   {u:"The American Revolution", l:[73], ck:"CKHG G4 U7 · G1 U8"},
+   {u:"The Constitution", l:[], ck:"CKHG G4 U8 · G2 U6"}],
+  science:[
+   {u:"Gravity & Magnetism", l:[5]},
+   {u:"Tiny Building Blocks", l:[22]},
+   {u:"Solid, Liquid & Gas", l:[23]},
+   {u:"Mixtures", l:[24]},
+   {u:"Light & Color", l:[25]},
+   {u:"Sound", l:[26]},
+   {u:"Simple Machines", l:[27]},
+   {u:"Electricity", l:[28]},
+   {u:"Chemical Change", l:[38]},
+   {u:"Float or Sink", l:[42]}],
+  body:[
+   {u:"Growth & Change", l:[], ck:"NIH + original"},
+   {u:"Nutrition Deep-Dive", l:[], ck:"CDC + original"},
+   {u:"Sports Science", l:[], ck:"original"},
+   {u:"Risk & Judgment", l:[], ck:"original"},
+   {u:"Outdoor & Emergency Skills", l:[], ck:"original"},
+   {u:"Money & Personal Finance", l:[], ck:"original"}]},
+ 4:{
+  history:[
+   {u:"The French Revolution", l:[74], ck:"—"},
+   {u:"The Age of Machines", l:[75], ck:"—"},
+   {u:"Napoleon", l:[76], ck:"—"},
+   {u:"Abolition", l:[77], ck:"CKHG G4 U10", s:1},
+   {u:"A Nation Divided", l:[78], ck:"CKHG G5 U11 · G2 U9", s:1},
+   {u:"Westward Expansion", l:[79], ck:"CKHG G5 U10 · G5 U12 · G1 U9"},
+   {u:"The Scramble for Africa", l:[80], ck:"—", s:1},
+   {u:"World War I", l:[81], ck:"—", s:1},
+   {u:"The Jazz Age", l:[82], ck:"—"},
+   {u:"World War II", l:[83,84], ck:"—", s:1},
+   {u:"The Cold War", l:[85], ck:"—"},
+   {u:"The Race to the Moon", l:[86], ck:"—"},
+   {u:"Marching for Justice", l:[87], ck:"CKHG G2 U11", s:1},
+   {u:"The Wall Comes Down", l:[88], ck:"—"},
+   {u:"The Information Revolution", l:[89], ck:"—"},
+   {u:"Connecting the Dots", l:[90], ck:"—"},
+   {u:"Civics: How Government Works", l:[], ck:"CKHG G1 U10 · G4 U11"},
+   {u:"Immigration & Citizenship", l:[], ck:"CKHG G2 U10"},
+   {u:"Understanding Economics", l:[], ck:"CKHG G2 U12 · G5 U14"}],
+  science:[
+   {u:"Engineering & Design", l:[], ck:"CKSci + original"},
+   {u:"Computer Science", l:[], ck:"CKSci + original"}],
+  body:[
+   {u:"Review & Capstone", l:[], ck:"original"}]}
+};
+
+/* ---------- activity bank ---------- */
+const ACTS = {
+ history:["Find it on the map or globe, then trace the route with a finger.",
+  "Add the event to the wall timeline — who came before, who came after?",
+  "Draw one scene from the story and label three things in it.",
+  "Act out the key moment. Each learner plays someone different.",
+  "Build it — blocks, clay, or cardboard. Ten minutes, no perfection.",
+  "Compare with a civilization already studied: two things same, two different."],
+ science:["Run the demonstration with household items, predicting out loud first.",
+  "Draw and label the diagram from memory, then check it against the story.",
+  "Go outside and find a real example. Photograph or sketch it.",
+  "Sort the cards or objects into groups and explain the rule used.",
+  "Build a model out of whatever's on the counter.",
+  "Ask 'what would happen if…' and reason it through together."],
+ body:["Find it on your own body and describe what it does.",
+  "Practise the skill for real — don't just talk about it.",
+  "Draw the system and label the parts.",
+  "Make the plan, write it down, and stick it on the fridge.",
+  "Role-play the scenario twice: once going wrong, once going right.",
+  "Teach it to someone who wasn't in the room."]
+};
+
+/* ---------- storage ---------- */
+const KEY="homeschool.v1";
+let DB;
+try{ DB=JSON.parse(localStorage.getItem(KEY))||null }catch(e){ DB=null }
+if(!DB) DB={kids:[],srs:{},log:[],ptr:{history:0,science:0,body:0},count:0,done:{}};
+DB.ptr=DB.ptr||{history:0,science:0,body:0}; DB.srs=DB.srs||{}; DB.log=DB.log||[];
+DB.done=DB.done||{}; DB.count=DB.count||0;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){toast("Saving unavailable in this browser")}};
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LBY={}; (window.LESSONS||[]).forEach(l=>LBY[l.id]=l);
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2600);}
+function show(id){$$(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");scrollTo(0,0);
+  if(id==="home")renderHome(); if(id==="seq")renderSeq(); if(id==="prog")renderProg(); if(id==="log")renderLog();}
+
+/* ---------- playlist ---------- */
+function playlist(strand){
+  const out=[];
+  for(const y of [1,2,3,4]) for(const unit of (SEQ[y][strand]||[]))
+    if(unit.l.length) unit.l.forEach(id=>out.push({y,strand,unit:unit.u,ck:unit.ck,s:unit.s,lid:id}));
+    else out.push({y,strand,unit:unit.u,ck:unit.ck,s:unit.s,lid:null});
+  return out;
+}
+function nextSession(){
+  const strand=ROTATION[DB.count%ROTATION.length];
+  const pl=playlist(strand);
+  let i=DB.ptr[strand]||0;
+  while(i<pl.length && pl[i].lid===null) i++;          // skip unauthored units
+  if(i>=pl.length) return null;
+  return {...pl[i], idx:i, pl};
+}
+
+/* ---------- tiering: T1 = 2 options · T2 = full quiz · T3 = discussion ---------- */
+function itemsFor(lesson, tier){
+  if(!lesson) return [];
+  const kc = window.KC && window.KC[lesson.id];
+  if(kc && kc.length) return kc
+    .map((c,i)=>({type:"recall", q:c.q, a:c.a, f:c.f, t:c.t, key:"k"+i}))
+    .filter(x=>x.t<=tier);
+  if(tier===3) return (lesson.discussion||[]).map((d,i)=>({type:"open",q:d,key:`d${i}`}));
+  return (lesson.quiz||[]).map((qz,i)=>{
+    if(tier===1){
+      const wrong=qz.options.map((o,ix)=>ix).filter(ix=>ix!==qz.correct);
+      const keep=wrong[Math.floor(Math.random()*wrong.length)];
+      const pair=[qz.correct,keep].sort((a,b)=>a-b);
+      return {type:"mc",q:qz.q,options:pair.map(ix=>qz.options[ix]),
+              correct:pair.indexOf(qz.correct),key:`q${i}`};
+    }
+    return {type:"mc",q:qz.q,options:qz.options.slice(),correct:qz.correct,key:`q${i}`};
+  });
+}
+
+/* ---------- spaced repetition ---------- */
+const GAPS=[1,3,7,21,70];
+const today=()=>new Date().toISOString().slice(0,10);
+const addDays=(n)=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+function srsKey(kid,lid,key){return `${kid}|${lid}|${key}`}
+function record(kid,lid,key,ok){
+  const k=srsKey(kid,lid,key), cur=DB.srs[k]||{box:0,due:today(),seen:0,right:0};
+  cur.seen++; if(ok)cur.right++;
+  cur.box = ok ? Math.min(cur.box+1,GAPS.length-1) : 0;
+  cur.due = addDays(ok?GAPS[cur.box]:1);
+  DB.srs[k]=cur; save();
+}
+function dueFor(kid){
+  const t=today(), out=[];
+  for(const k in DB.srs){
+    const [kd,lid,key]=k.split("|");
+    if(kd!==kid || DB.srs[k].due>t) continue;
+    const L=LBY[lid]; if(!L) continue;
+    const kid_=DB.kids.find(x=>x.id===kid); if(!kid_) continue;
+    const tier=kid_.tiers[L.type==="history"?"history":"science"]||1;
+    const it=itemsFor(L,tier).find(x=>x.key===key);
+    if(it) out.push({...it,lid:+lid,title:L.title});
+  }
+  return out.sort(()=>Math.random()-.5);
+}
+
+/* ---------- home ---------- */
+function renderHome(){
+  $("#kidList").innerHTML = DB.kids.map(k=>{
+    const d=dueFor(k.id).length;
+    return `<div class="kid"><button class="ed" onclick="editKid('${k.id}')">✏️</button>
+      <div class="av">${k.avatar}</div><div class="nm">${esc(k.name)}</div>
+      <div class="sm dim">Grade ${k.grade}</div>
+      <div class="sm dim" style="margin-top:5px">H·T${k.tiers.history} S·T${k.tiers.science} B·T${k.tiers.body}</div>
+      <div class="sm" style="margin-top:6px;color:${d?'var(--gold)':'var(--dim)'}">${d} due for review</div></div>`;
+  }).join("") + `<div class="kid add" onclick="editKid(null)"><div style="font-size:28px">＋</div><div>Add learner</div></div>`;
+
+  const n=nextSession();
+  if(!DB.kids.length){ $("#tonightCard").innerHTML=`<h2>Tonight</h2><div class="empty">Add a learner to begin.</div>`; return; }
+  if(!n){ $("#tonightCard").innerHTML=`<h2>Tonight</h2><div class="empty">Sequence complete 🎉</div>`; return; }
+  const L=LBY[n.lid];
+  $("#tonightCard").innerHTML=`<h2>Tonight's session</h2>
+    <div class="row" style="margin-bottom:8px">
+      <span class="tag ${n.strand}">${STRANDS[n.strand]}</span>
+      <span class="tag">Year ${n.y}</span>
+      ${n.s?`<span class="tag warn">⚠ sensitive content</span>`:""}
+    </div>
+    <div style="font-size:22px;font-weight:800">${esc(n.unit)}</div>
+    <div class="dim" style="margin-bottom:8px">${esc(L.title)} · ${esc(L.readingTime)} read · ${L.quiz.length} quiz · ${L.discussion.length} discussion</div>
+    ${n.ck&&n.ck!=="—"?`<div class="sm dim">Cross-reference: ${esc(n.ck)}</div>`:""}
+    <div class="row" style="margin-top:14px">
+      <button class="btn" onclick="startSession()">▶ Start session</button>
+      <button class="btn g sm" onclick="skipSession()">Skip</button>
+    </div>`;
+}
+
+/* ---------- kid editor ---------- */
+let draft=null;
+function editKid(id){
+  draft = id ? {...DB.kids.find(k=>k.id===id)} : {id:uid(),name:"",avatar:AV[DB.kids.length%AV.length],grade:"K",tiers:{history:1,science:1,body:1}};
+  $("#kidTitle").textContent = id?"Edit learner":"New learner";
+  $("#kName").value=draft.name; $("#kGrade").value=draft.grade;
+  $("#delBtn").style.display=id?"":"none";
+  $("#kAv").innerHTML=AV.map(a=>`<div class="${a===draft.avatar?"on":""}" data-a="${a}">${a}</div>`).join("");
+  $("#kAv").onclick=e=>{const el=e.target.closest("div[data-a]");if(!el)return;draft.avatar=el.dataset.a;
+    $$("#kAv div").forEach(x=>x.classList.toggle("on",x===el));};
+  ["History","Science","Body"].forEach(s=>{
+    const sel=$("#t"+s); sel.innerHTML=TIERS.map(t=>`<option value="${t.id}">${t.name}</option>`).join("");
+    sel.value=draft.tiers[s.toLowerCase()];
+  });
+  show("kid");
+}
+function suggestTiers(){
+  const g=$("#kGrade").value, t = (g==="K"||g==="1")?1:(g==="4"||g==="5")?3:2;
+  ["History","Science","Body"].forEach(s=>$("#t"+s).value=t);
+}
+function saveKid(){
+  const n=$("#kName").value.trim(); if(!n){toast("Name required");return;}
+  draft.name=n; draft.grade=$("#kGrade").value;
+  draft.tiers={history:+$("#tHistory").value,science:+$("#tScience").value,body:+$("#tBody").value};
+  const i=DB.kids.findIndex(k=>k.id===draft.id);
+  if(i>=0)DB.kids[i]=draft; else DB.kids.push(draft);
+  save(); show("home");
+}
+function delKid(){
+  if(!confirm(`Delete ${draft.name}?`))return;
+  DB.kids=DB.kids.filter(k=>k.id!==draft.id);
+  Object.keys(DB.srs).forEach(k=>{if(k.startsWith(draft.id+"|"))delete DB.srs[k]});
+  save(); show("home");
+}
+
+/* ---------- session ---------- */
+let S=null;
+const BLOCKS=["Warm-up","Teach","Check","Do","Close"];
+function startSession(){
+  const n=nextSession(); if(!n)return;
+  S={...n, lesson:LBY[n.lid], block:0, results:{}, narr:{}, big:false, part:0, showAll:false,
+     act:ACTS[n.strand][Math.floor(Math.random()*ACTS[n.strand].length)]};
+  $("#sessTitle").textContent=S.unit;
+  show("sess"); renderBlock();
+}
+function skipSession(){ const n=nextSession(); if(!n)return; DB.ptr[n.strand]=n.idx+1; DB.count++; save(); renderHome(); }
+function quitSession(){ S=null; show("home"); }
+function toggleBig(){ S.big=!S.big; renderBlock(); }
+function stepBy(d){
+  if(S.block+d<0) return;
+  if(S.block+d>=BLOCKS.length){ finishSession(); return; }
+  S.block+=d; renderBlock(); scrollTo(0,0);
+}
+function renderBlock(){
+  $("#steps").innerHTML=BLOCKS.map((b,i)=>
+    `<div class="step ${i===S.block?"on":i<S.block?"done":""}">${i+1}. ${b}</div>`).join("");
+  $("#prevBtn").disabled=S.block===0;
+  $("#nextBtn").textContent=S.block===BLOCKS.length-1?"✔ Finish":"Next →";
+  const f=[blkWarm,blkTeach,blkCheck,blkDo,blkClose][S.block];
+  $("#blockBody").innerHTML=f();
+  if(S.block===2) wireCheck();
+}
+function blkWarm(){
+  if(!DB.kids.length) return `<div class="empty">No learners.</div>`;
+  let h=`<div class="card"><h2>1 · Retrieval warm-up <span class="sm dim">5 min · oral · no stakes</span></h2>
+    <div class="sm dim" style="margin-bottom:12px">Ask these aloud. They're pulled from earlier lessons that are due for review — this is the part that makes knowledge stick.</div>`;
+  let any=false;
+  DB.kids.forEach(k=>{
+    const due=dueFor(k.id).slice(0,5);
+    h+=`<div style="margin-bottom:14px"><b>${k.avatar} ${esc(k.name)}</b>`;
+    if(!due.length) h+=`<div class="sm dim">Nothing due yet — skip ahead.</div>`;
+    else { any=true; h+=`<ol class="sm" style="margin:6px 0 0;padding-left:20px">`+
+      due.map(d=>`<li style="margin-bottom:6px">${esc(d.q)}${d.a?` <span class="ansinline">${esc(d.a)}</span>`:""}
+        <span class="dim">— ${esc(d.title)}</span></li>`).join("")+`</ol>`; }
+    h+=`</div>`;
+  });
+  if(!any) h+=`<div class="sm dim">First sessions have nothing to review. This fills up fast.</div>`;
+  return h+`</div>`;
+}
+function storyParts(html){ return html.split(/(?=<h3)/).filter(p=>p.trim()); }
+function part(d){
+  S.part=Math.max(0,S.part+d); renderBlock();
+  const b=document.getElementById("storyBox"); if(b) b.scrollIntoView({block:"start",behavior:"smooth"});
+}
+function blkTeach(){
+  const L=S.lesson, parts=storyParts(L.story);
+  const kc=(window.KC||{})[L.id];
+  const all=S.showAll||parts.length<2;
+  const body=all?L.story:parts[Math.min(S.part,parts.length-1)];
+  const core = kc&&kc.length ? `<div class="card" style="margin-top:14px;background:var(--panel2)">
+      <h2>🎯 Key facts <span class="sm dim">${kc.length} · teach these explicitly · 3–4 min</span></h2>
+      <div class="sm dim" style="margin-bottom:10px">These are what get quizzed and spaced. Say each one plainly, point at the picture, move on. Tier shows who is held to it.</div>
+      ${kc.map(c=>`<div class="fact"><span class="tag t${c.t}">T${c.t}+</span> ${esc(c.f)}</div>`).join("")}
+    </div>` : `<div class="sm dim" style="margin-top:12px">No knowledge card for this lesson yet — the check will fall back to the story's own quiz.</div>`;
+  return `<div class="card"><h2>2 · Hook <span class="sm dim">2–3 min · read aloud</span></h2>
+    <div class="sm dim" style="margin-bottom:10px">Read the opening to pull them in. You don't need the whole story — the key facts below are the part that has to land.</div>
+    <div class="story ${S.big?"big":""}" id="storyBox">${body}</div>
+    ${all?"":`<div class="row" style="margin-top:10px;justify-content:space-between">
+        <button class="btn g sm" ${S.part===0?"disabled":""} onclick="part(-1)">◀</button>
+        <span class="sm dim">Part ${Math.min(S.part,parts.length-1)+1} of ${parts.length}</span>
+        <button class="btn g sm" ${S.part>=parts.length-1?"disabled":""} onclick="part(1)">▶</button>
+      </div>`}
+    <div class="row" style="margin-top:10px">
+      <button class="btn g sm" onclick="S.showAll=!S.showAll;renderBlock()">${all?"📑 Read in parts":"📖 Whole story"}</button>
+      <button class="btn g sm" onclick="toggleBig()">🔎 ${S.big?"Smaller":"Bigger"} text</button>
+    </div>
+    <div class="sm dim" style="margin-top:8px">Images load from Wikimedia and need internet; the text works offline.</div></div>${core}`;
+}
+function blkCheck(){
+  let h=`<div class="card"><h2>3 · Tiered check <span class="sm dim">5 min</span></h2>
+   <div class="sm dim" style="margin-bottom:12px">Each learner answers at their own tier. Tap the answer they give — wrong answers simply come back sooner.</div>`;
+  DB.kids.forEach(k=>{
+    const strand=S.strand==="body"?"body":S.strand;
+    const tier=k.tiers[strand]||1;
+    const items=itemsFor(S.lesson,tier);
+    h+=`<div style="margin:18px 0 6px"><b>${k.avatar} ${esc(k.name)}</b> <span class="tag">${TIERS[tier-1].name}</span></div>`;
+    if(!items.length){h+=`<div class="sm dim">No items.</div>`;return;}
+    items.forEach((it,ix)=>{
+      const id=`${k.id}__${it.key}`;
+      h+=`<div class="q"><div class="qt">${esc(it.q)}</div>`;
+      if(it.type==="mc") h+=it.options.map((o,oi)=>
+        `<button class="opt" data-id="${id}" data-ok="${oi===it.correct?1:0}" data-c="${it.correct}" data-i="${oi}">${esc(o)}</button>`).join("");
+      else{
+        if(it.a) h+=`<div class="ans">↳ ${esc(it.a)}</div>`;
+        h+=`<div class="row"><button class="btn ok sm" data-id="${id}" data-ok="1">✓ Got it</button>
+        <button class="btn no sm" data-id="${id}" data-ok="0">✗ Not yet</button></div>`;
+      }
+      h+=`</div>`;
+    });
+  });
+  return h+`</div>`;
+}
+function wireCheck(){
+  $("#blockBody").onclick=e=>{
+    const b=e.target.closest("[data-id]"); if(!b)return;
+    const [kid,key]=b.dataset.id.split("__");
+    if(S.results[b.dataset.id]!==undefined) return;
+    const ok=b.dataset.ok==="1";
+    S.results[b.dataset.id]=ok;
+    record(kid,S.lid,key,ok);
+    const box=b.closest(".q");
+    if(b.classList.contains("opt")){
+      box.querySelectorAll(".opt").forEach(o=>{
+        if(+o.dataset.i===+b.dataset.c)o.classList.add("right");
+        else if(o===b)o.classList.add("wrong");
+        o.disabled=true;
+      });
+    } else { box.querySelectorAll("button").forEach(x=>x.disabled=true); b.style.outline="2px solid #fff"; }
+  };
+}
+function blkDo(){
+  return `<div class="card"><h2>4 · Do <span class="sm dim">20 min</span></h2>
+    <div style="font-size:20px;font-weight:700;margin:10px 0">${esc(S.act)}</div>
+    <div class="sm dim">Investigation comes after the explanation, never before — novices need the concept first.</div>
+    <div class="row" style="margin-top:14px"><button class="btn g sm" onclick="S.act=ACTS[S.strand][Math.floor(Math.random()*ACTS[S.strand].length)];renderBlock()">🎲 Different activity</button></div></div>`;
+}
+function blkClose(){
+  let h=`<div class="card"><h2>5 · Close <span class="sm dim">3 min · narration</span></h2>
+   <div class="sm dim" style="margin-bottom:12px">Each learner says one sentence: "Today I learned that…" Type it as they say it — explaining is what turns listening into learning.</div>`;
+  DB.kids.forEach(k=>{
+    h+=`<label>${k.avatar} ${esc(k.name)}</label>
+     <textarea rows="2" data-n="${k.id}" placeholder="Today I learned that…">${esc(S.narr[k.id]||"")}</textarea>`;
+  });
+  return h+`</div>`;
+}
+function finishSession(){
+  $$("#blockBody textarea[data-n]").forEach(t=>{ if(t.value.trim()) S.narr[t.dataset.n]=t.value.trim(); });
+  const entries=Object.entries(S.narr).map(([kid,text])=>({kid,text}));
+  if(entries.length) DB.log.unshift({date:today(),unit:S.unit,strand:S.strand,lesson:S.lesson.title,entries});
+  DB.done[S.lid]=today();
+  DB.ptr[S.strand]=S.idx+1; DB.count++;
+  save();
+  const n=Object.keys(S.results).length, r=Object.values(S.results).filter(Boolean).length;
+  toast(`Session logged — ${r}/${n} correct`);
+  S=null; show("home");
+}
+
+/* ---------- sequence browser ---------- */
+function renderSeq(){
+  let h=`<div class="card sm dim">Content spine: your 90-lesson Bedtime Curriculum. Units with no lesson attached are
+   <span class="tag gap">gaps</span> — not yet authored; the listed source is where they'll be built from.
+   CKHG material is CC BY-NC-SA 3.0 (attribution · non-commercial · share-alike).</div>`;
+  for(const y of [1,2,3,4]){
+    h+=`<div class="card"><h2>Year ${y}</h2>`;
+    for(const st of ["history","science","body"]){
+      h+=`<div style="margin:14px 0 6px"><span class="tag ${st}">${STRANDS[st]}</span></div>`;
+      (SEQ[y][st]||[]).forEach(u=>{
+        const titles=u.l.map(id=>LBY[id]?LBY[id].title:`#${id}`);
+        h+=`<div class="unit"><b>${esc(u.u)}</b>`;
+        if(u.l.length) h+=`<span class="sm dim">${u.l.map((id,i)=>`#${id} ${esc(titles[i])}`).join(" · ")}</span>`;
+        else h+=`<span class="tag gap">gap</span>`;
+        if(u.s) h+=`<span class="tag warn">⚠</span>`;
+        if(u.ck&&u.ck!=="—") h+=`<span class="sm dim">→ ${esc(u.ck)}</span>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`</div>`;
+  }
+  $("#seqBody").innerHTML=h;
+}
+
+/* ---------- progress ---------- */
+function renderProg(){
+  if(!DB.kids.length){$("#progBody").innerHTML=`<div class="empty">No learners yet.</div>`;return;}
+  $("#progBody").innerHTML=DB.kids.map(k=>{
+    let seen=0,right=0,secure=0,tot=0;
+    const byT={};
+    for(const key in DB.srs){
+      if(!key.startsWith(k.id+"|"))continue;
+      const v=DB.srs[key], lid=key.split("|")[1], L=LBY[lid]; if(!L)continue;
+      seen+=v.seen; right+=v.right; tot++; if(v.box>=3)secure++;
+      byT[L.topic]=byT[L.topic]||{t:0,s:0}; byT[L.topic].t++; if(v.box>=3)byT[L.topic].s++;
+    }
+    const acc=seen?Math.round(right/seen*100):0;
+    const rows=Object.entries(byT).sort((a,b)=>b[1].t-a[1].t).map(([t,v])=>
+      `<tr><td>${esc(t||"—")}</td><td>${v.s}/${v.t} secure</td>
+       <td style="width:38%"><div class="bar"><i style="width:${v.t?v.s/v.t*100:0}%"></i></div></td></tr>`).join("");
+    return `<div class="card"><div class="row" style="justify-content:space-between">
+      <div><span style="font-size:32px">${k.avatar}</span> <b style="font-size:20px">${esc(k.name)}</b>
+        <div class="sm dim">Grade ${k.grade} · H·T${k.tiers.history} S·T${k.tiers.science} B·T${k.tiers.body}</div></div>
+      <div style="text-align:right"><div style="font-size:26px;font-weight:800">${acc}%</div>
+        <div class="sm dim">${secure} of ${tot} items secure · ${dueFor(k.id).length} due</div></div></div>
+      ${rows?`<table style="margin-top:14px">${rows}</table>`:`<div class="sm dim" style="margin-top:10px">No data yet.</div>`}</div>`;
+  }).join("");
+}
+
+/* ---------- logbook ---------- */
+function renderLog(){
+  if(!DB.log.length){$("#logBody").innerHTML=`<div class="empty">Narrations appear here after your first session.</div>`;return;}
+  $("#logBody").innerHTML=DB.log.map(e=>`<div class="card">
+    <div class="row" style="justify-content:space-between"><b>${esc(e.unit)}</b><span class="sm dim">${e.date}</span></div>
+    <div class="sm dim">${esc(e.lesson)}</div>
+    ${e.entries.map(x=>{const k=DB.kids.find(k=>k.id===x.kid);
+      return `<div style="margin-top:9px">${k?k.avatar+" "+esc(k.name):"—"}: <i>"${esc(x.text)}"</i></div>`}).join("")}
+  </div>`).join("");
+}
+
+/* ---------- boot ---------- */
+if(!window.LESSONS){
+  document.querySelector(".wrap").innerHTML=
+    `<div class="card"><h2>Content file missing</h2><div class="dim">
+     <code>curriculum-data.js</code> must sit in the same folder as this file.</div></div>`;
+} else renderHome();
+</script>
+</body>
+</html>
