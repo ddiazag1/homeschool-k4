@@ -31,12 +31,12 @@ window.SEQ = {
     {u:"The Assyrians", src:"SOTW Ch 8 — Shamshi-Adad, Gilgamesh", l:[1006]},
     {u:"The First Cities of India", src:"SOTW Ch 9 — the river-road, Mohenjo-Daro", l:[51]},
     {u:"The Far East: Ancient China", src:"SOTW Ch 10 — Lei Zu, pictograms, farming", l:[48]},
-    {u:"Ancient Africa", src:"SOTW Ch 11 — West Africa, Anansi tales", l:[]},
-    {u:"Life in Early Crete", src:"SOTW Ch 12 — bull-jumpers, Minos, the Minoans", l:[]},
-    {u:"The Middle Kingdom of Egypt", src:"SOTW Ch 13 — Nubia, the Hyksos", l:[]},
-    {u:"The New Kingdom of Egypt", src:"SOTW Ch 14 — Hatshepsut, Amenhotep, Tut", l:[]},
-    {u:"The Israelites Leave Egypt", src:"SOTW Ch 15 — Moses, the Exodus", l:[], s:1},
-    {u:"The Early Greeks", src:"SOTW Ch 16 — Mycenaeans, the Greek Dark Ages", l:[]},
+    {u:"Ancient Africa", src:"SOTW Ch 11 — West Africa, Anansi tales", l:[1007]},
+    {u:"Life in Early Crete", src:"SOTW Ch 12 — bull-jumpers, Minos, the Minoans", l:[1008]},
+    {u:"The Middle Kingdom of Egypt", src:"SOTW Ch 13 — Nubia, the Hyksos", l:[1009]},
+    {u:"The New Kingdom of Egypt", src:"SOTW Ch 14 — Hatshepsut, Amenhotep, Tut", l:[1010]},
+    {u:"The Israelites Leave Egypt", src:"SOTW Ch 15 — Moses, the Exodus", l:[1011], s:1},
+    {u:"The Early Greeks", src:"SOTW Ch 16 — Mycenaeans, the Greek Dark Ages", l:[1012]},
     {u:"The Phoenicians", src:"SOTW Ch 17 — traders, the founding of Carthage", l:[52]},
     {u:"The Return of Assyria", src:"SOTW Ch 18 — Ashurbanipal, the Library of Nineveh", l:[]},
     {u:"Greece Gets Civilized Again", src:"SOTW Ch 19 — alphabet, Homer, first Olympics", l:[49]},
@@ -118,11 +118,11 @@ window.SEQ = {
   /* ---------- Body, Health & Life Skills (original) ---------- */
   body: [
     {u:"Skeleton & Muscles", src:"original · NIH", l:[9]},
-    {u:"Heart, Lungs & Blood", src:"original · NIH", l:[]},
+    {u:"Heart, Lungs & Blood", src:"original · NIH", l:[3001]},
     {u:"Food & Digestion", src:"original · CDC", l:[10]},
     {u:"The Five Senses", src:"original", l:[11]},
-    {u:"Brain & Sleep", src:"original · NIH", l:[]},
-    {u:"Safety & First Aid", src:"original · Red Cross", l:[]}
+    {u:"Brain & Sleep", src:"original · NIH", l:[3002]},
+    {u:"Safety & First Aid", src:"original · Red Cross", l:[3003]}
   ]
 },
 
