@@ -96,6 +96,9 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 .tag.t3{background:rgba(154,123,176,.25);color:var(--body)}
 .ans{color:var(--good);font-weight:700;font-size:15px;margin:-4px 0 10px}
 .ansinline{color:var(--good);font-weight:700}
+.copywork{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--gold);
+  border-radius:10px;padding:12px 14px;margin:6px 0 16px}
+.copywork .cwtext{font-family:var(--serif);font-size:20px;margin-top:6px;line-height:1.45}
 
 /* ---------- phone ---------- */
 @media (max-width:640px){
@@ -522,12 +525,30 @@ function blkDo(){
     <div class="sm dim">Investigation comes after the explanation, never before — novices need the concept first.</div>
     <div class="row" style="margin-top:14px"><button class="btn g sm" onclick="S.act=ACTS[S.strand][Math.floor(Math.random()*ACTS[S.strand].length)];renderBlock()">⟳ Different activity</button></div></div>`;
 }
+/* Writing strand — the copywork → narration → dictation progression.
+   Runs inside the closing block, so it costs no extra time. */
+const WWE = {
+ 1:{label:"Narration", how:"Ask: \"Tell me one thing you remember.\" Write their sentence down <em>while they watch</em>, then read it back. Seeing speech become writing is the whole lesson at this stage."},
+ 2:{label:"Narration + copywork", how:"Ask for two or three sentences and write them down. Then have them copy the sentence below in their own hand — neatly, capital letter, full stop."},
+ 3:{label:"Narration + dictation", how:"Ask for three or four sentences and write them down. Then <em>dictate</em> the sentence below: read it twice, then they write it from hearing alone."}
+};
+function copyworkFor(lesson){
+  const kc=(window.KC||{})[lesson.id];
+  if(kc&&kc.length){ const t1=kc.filter(c=>c.t===1); return (t1[0]||kc[0]).f; }
+  const m=lesson.story.replace(/<[^>]+>/g," ").replace(/\s+/g," ").match(/[A-Z][^.!?]{20,90}[.!?]/);
+  return m?m[0].trim():"";
+}
 function blkClose(){
-  let h=`<div class="card"><h2>5 · Close <span class="sm dim">3 min · narration</span></h2>
-   <div class="sm dim" style="margin-bottom:12px">Each learner says one sentence: "Today I learned that…" Type it as they say it — explaining is what turns listening into learning.</div>`;
+  const cw=copyworkFor(S.lesson);
+  let h=`<div class="card"><h2>5 · Close <span class="sm dim">3–5 min · narration &amp; writing</span></h2>
+   <div class="sm dim" style="margin-bottom:12px">Saying it back is what turns listening into learning — and it's where the writing strand lives. Each learner works at their own stage.</div>
+   ${cw?`<div class="copywork"><span class="tag">Today's sentence</span><div class="cwtext">${esc(cw)}</div></div>`:""}`;
   DB.kids.forEach(k=>{
-    h+=`<label>${k.avatar} ${esc(k.name)}</label>
-     <textarea rows="2" data-n="${k.id}" placeholder="Today I learned that…">${esc(S.narr[k.id]||"")}</textarea>`;
+    const tier=k.tiers[S.strand==="body"?"body":S.strand]||1;
+    const w=WWE[tier];
+    h+=`<label>${k.avatar} ${esc(k.name)} <span class="tag t${tier}">${w.label}</span></label>
+     <div class="sm dim" style="margin:-2px 0 6px">${w.how}</div>
+     <textarea rows="${tier===1?2:3}" data-n="${k.id}" placeholder="Write their narration here, word for word…">${esc(S.narr[k.id]||"")}</textarea>`;
   });
   return h+`</div>`;
 }
