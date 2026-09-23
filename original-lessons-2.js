@@ -39,7 +39,7 @@ window.LESSONS = (window.LESSONS || []).concat([
 <p>Somewhere in that world, one family began doing something different. They worshipped one God only.</p>
 <p>That idea is called <strong>monotheism</strong> — from Greek words meaning "one god" — and almost nobody else in the ancient world held it.</p>
 <h3>What the Story Says</h3>
-<p>The account comes from the <strong>Hebrew Bible</strong>, the sacred book of the Jewish people. Historians take it seriously as a record of what people believed and remembered, while also saying honestly that most of it cannot be checked against other evidence. So here is the story as it is told.</p>
+<p>The account comes from the <strong>Hebrew Bible</strong>, the sacred book of the Jewish people. Historians take it seriously. It tells us what people believed and what they remembered. But they also say, honestly, that most of it cannot be checked against other evidence. So here is the story as it is told.</p>
 <p>A man named <strong>Abraham</strong> lived in the city of Ur in Mesopotamia. He heard God tell him to leave — to go to a land he had never seen, and to trust that his descendants would one day become a great nation there.</p>
 <p>He went. He travelled hundreds of miles to a land called <strong>Canaan</strong>, roughly where Israel and Palestine are today. That agreement between Abraham and God — a promise on both sides — is called a <strong>covenant</strong>, and it sits at the centre of the whole Jewish faith.</p>
 <h3>Joseph in Egypt</h3>
@@ -50,8 +50,8 @@ window.LESSONS = (window.LESSONS || []).concat([
 <p>When the famine came, Joseph's brothers travelled to Egypt to beg for food — and found their brother running the country.</p>
 <p>The family came to Egypt and settled there. That is how, in the story, a family from Canaan ends up living in Egypt — where we will find them again, several hundred years later, in serious trouble.</p>
 <h3>Why It Mattered So Much</h3>
-<p>Three of the world's largest religions — Judaism, Christianity and Islam — all trace themselves back to Abraham. Billions of people today, believers and not, live in cultures shaped by that one family's idea.</p>
-<p>It is worth noticing what made it so strange at the time. If there is only one God, then that God is not the god of your city or your river. He is everyone's, everywhere — and you can carry him with you when you leave home. Almost nobody thought that way in 2000 BC.</p>`,
+<p>Three of the world's largest religions trace themselves back to Abraham: Judaism, Christianity and Islam. Billions of people today live in cultures shaped by that one family's idea.</p>
+<p>It is worth noticing what made it so strange. If there is only one God, that God is not the god of your city. He is not the god of your river either. He belongs to everyone, everywhere. And you can take him with you when you leave home. Almost nobody thought that way in 2000 BC.</p>`,
  discussion:["Why would believing in one God be unusual in the ancient world?",
              "How is a covenant different from an order?",
              "Historians say 'the Bible tells us' rather than 'this definitely happened.' Why is that an honest way to talk?"],
