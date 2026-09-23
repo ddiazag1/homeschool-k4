@@ -104,6 +104,19 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 .unit.pick:active{background:rgba(255,255,255,.12)}
 .unit.here{background:rgba(194,128,58,.12);border-left:3px solid var(--accent);padding-left:10px}
 .tick{color:var(--good);font-weight:700}
+.seqn{display:inline-block;min-width:26px;font-size:12px;font-weight:700;color:var(--dim);
+  font-variant-numeric:tabular-nums}
+.dayp{display:inline-block;min-width:34px;font-size:12px;font-weight:700;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.5px}
+.unit b.todo{color:var(--dim);font-weight:500}
+.unit{gap:8px}
+@media (max-width:640px){
+  .unit{gap:6px}
+  .unit b{flex:1 1 100%;order:3}
+  .seqn,.dayp{order:1}
+  .unit .tag{order:2}
+  .unit .sm{order:4;flex-basis:100%}
+}
 
 /* ---------- phone ---------- */
 @media (max-width:640px){
@@ -141,7 +154,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
     <div><h1>🧭 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills
       <span class="tag" id="buildTag" style="margin-left:6px"></span></div></div>
     <div class="row">
-      <button class="btn g sm" onclick="show('seq')">🗺️ Sequence</button>
+      <button class="btn g sm" onclick="show('seq')">🗺️ Syllabus</button>
       <button class="btn g sm" onclick="show('prog')">📈 Progress</button>
       <button class="btn g sm" onclick="show('log')">🪶 Logbook</button>
     </div>
@@ -172,7 +185,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 
 <!-- SEQUENCE -->
 <section id="seq" class="screen">
-  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>🗺️ Scope &amp; Sequence</h1><span></span></div>
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>🗺️ Syllabus</h1><span></span></div>
   <div id="seqBody"></div>
 </section>
 
@@ -373,7 +386,20 @@ function renderHome(){
       <button class="btn" onclick="startSession()">▶ Start session</button>
       <button class="btn g sm" onclick="show('seq')">🗺️ Pick a different lesson</button>
       <button class="btn g sm" onclick="skipSession()">Skip</button>
-    </div>`;
+    </div>
+    ${nextPreview()}`;
+}
+
+function nextPreview(){
+  const up=upcoming(5).slice(1);
+  if(!up.length) return "";
+  return `<div style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
+    <div class="sm dim" style="margin-bottom:6px">Coming up after tonight</div>
+    ${up.map(e=>`<div class="sm" style="padding:3px 0">
+       <span class="dayp">${DAYS[e.day]}</span>
+       <span class="tag ${e.strand}">${e.strand==="history"?"Hist":e.strand==="science"?"Sci":"Body"}</span>
+       ${esc(e.unit)}</div>`).join("")}
+    <button class="btn g sm" style="margin-top:8px" onclick="show('seq')">See the whole run →</button></div>`;
 }
 
 /* ---------- kid editor ---------- */
@@ -592,42 +618,83 @@ function finishSession(){
 }
 
 /* ---------- sequence browser ---------- */
-let seqFilter="all";
+const DAYS=["Mon","Tue","Wed","Thu","Fri"];
+/* The actual running order: walks the Mon-Fri rotation forward from
+   where each strand is bookmarked, skipping anything unwritten. */
+function upcoming(n){
+  const ptr={...DB.ptr}, pls={history:playlist("history"),science:playlist("science"),body:playlist("body")};
+  let c=DB.count, out=[], guard=0;
+  while(out.length<n && guard++<600){
+    const day=c%ROTATION.length, st=ROTATION[day], pl=pls[st];
+    let i=ptr[st]||0;
+    while(i<pl.length && pl[i].lid===null) i++;
+    c++;
+    if(i>=pl.length) continue;               // strand finished - skip its slot
+    out.push({...pl[i], idx:i, strand:st, day});
+    ptr[st]=i+1;
+  }
+  return out;
+}
+let seqFilter="next";
 function setSeqFilter(f){ seqFilter=f; renderSeq(); }
 function renderSeq(){
-  let h=`<div class="card sm dim" style="margin-bottom:12px">
-    <b style="color:var(--txt)">Tap any lesson to teach it now</b> — you can go back to an earlier one or jump ahead.
-    A ✓ means it's been taught. Teaching an earlier lesson won't lose your place.
-    <div class="row" style="margin-top:10px">
-      ${["all","history","science","body"].map(f=>
-        `<button class="btn ${seqFilter===f?"":"g"} sm" onclick="setSeqFilter('${f}')">${f==="all"?"All":STRANDS[f]}</button>`).join("")}
-    </div></div>`;
-  const strands = seqFilter==="all" ? ["history","science","body"] : [seqFilter];
-  for(const st of strands){
-    const pl=playlist(st), ptr=DB.ptr[st]||0;
-    h+=`<div class="card"><h2><span class="tag ${st}">${STRANDS[st]}</span></h2>`;
-    let lastYear=null;
-    pl.forEach((e,idx)=>{
-      if(e.y!==lastYear){ lastYear=e.y; h+=`<div class="sm dim" style="margin:14px 0 4px;font-weight:700">YEAR ${e.y}</div>`; }
-      const L=e.lid?LBY[e.lid]:null;
-      const done=e.lid&&DB.done[e.lid];
-      const carded=e.lid&&window.KC&&window.KC[e.lid];
-      const here=idx===ptr;
-      if(!L){
-        h+=`<div class="unit"><b>${esc(e.unit)}</b><span class="tag gap">not written</span>
-            ${e.ck&&e.ck!=="—"?`<span class="sm dim">→ ${esc(e.ck)}</span>`:""}</div>`;
-      } else {
-        h+=`<div class="unit pick ${here?"here":""}" onclick="startSessionAt('${st}',${idx})">
-            <b>${done?'<span class="tick">✓</span> ':""}${esc(e.unit)}</b>
-            <span class="sm dim">${esc(L.title)}</span>
-            ${carded?"":`<span class="tag">basic quiz</span>`}
-            ${e.s?`<span class="tag warn">⚠</span>`:""}
-            ${here?`<span class="tag t2">next up</span>`:""}
-            ${e.ck&&e.ck!=="—"?`<span class="sm dim">→ ${esc(e.ck)}</span>`:""}</div>`;
-      }
+  const tabs=[["next","📅 What's next"],["history","Story of the World"],["science","BFSU Science"],["body","Body & Life"]];
+  let h=`<div class="row" style="margin-bottom:14px">
+    ${tabs.map(([f,label])=>`<button class="btn ${seqFilter===f?"":"g"} sm" onclick="setSeqFilter('${f}')">${label}</button>`).join("")}
+  </div>`;
+
+  if(seqFilter==="next"){
+    const up=upcoming(30);
+    h+=`<div class="card sm dim" style="margin-bottom:12px">Your next 30 sessions, in the order they'll actually run —
+        science Mon/Tue, history Wed/Thu, body Fri. Tap any one to teach it now.</div>`;
+    if(!up.length){ h+=`<div class="empty">Nothing left to teach — the written sequence is complete.</div>`; }
+    let week=0;
+    up.forEach((e,i)=>{
+      if(i%5===0){ week++; h+=`${i?`</div>`:``}<div class="card"><h2>Week ${week}</h2>`; }
+      const L=LBY[e.lid], done=DB.done[e.lid], carded=window.KC&&window.KC[e.lid];
+      h+=`<div class="unit pick ${i===0?"here":""}" onclick="startSessionAt('${e.strand}',${e.idx})">
+          <span class="dayp">${DAYS[e.day]}</span>
+          <span class="tag ${e.strand}">${e.strand==="history"?"Hist":e.strand==="science"?"Sci":"Body"}</span>
+          <b>${done?'<span class="tick">✓</span> ':""}${esc(e.unit)}</b>
+          <span class="sm dim">${esc(L.title)}</span>
+          ${carded?"":`<span class="tag">basic quiz</span>`}
+          ${e.s?`<span class="tag warn">⚠ sensitive</span>`:""}
+          ${i===0?`<span class="tag t2">tonight</span>`:""}</div>`;
     });
-    h+=`</div>`;
+    if(up.length) h+=`</div>`;
+    $("#seqBody").innerHTML=h; return;
   }
+
+  const st=seqFilter, pl=playlist(st), ptr=DB.ptr[st]||0;
+  const written=pl.filter(e=>e.lid).length;
+  h+=`<div class="card sm dim" style="margin-bottom:12px">
+      The full syllabus in order. <b style="color:var(--txt)">${written} of ${pl.length}</b> written so far.
+      ✓ = taught · amber bar = your place · tap any written lesson to teach it.</div>`;
+  let lastYear=null, num=0;
+  pl.forEach((e,idx)=>{
+    if(e.y!==lastYear){
+      if(lastYear!==null) h+=`</div>`;
+      lastYear=e.y; num=0;
+      h+=`<div class="card"><h2><span class="tag ${st}">${STRANDS[st]}</span> Year ${e.y}</h2>`;
+    }
+    num++;
+    const L=e.lid?LBY[e.lid]:null, done=e.lid&&DB.done[e.lid];
+    const carded=e.lid&&window.KC&&window.KC[e.lid], here=idx===ptr;
+    if(!L){
+      h+=`<div class="unit"><span class="seqn">${num}</span><b class="todo">${esc(e.unit)}</b>
+          <span class="tag gap">not written</span>
+          ${e.ck&&e.ck!=="—"?`<span class="sm dim">${esc(e.ck)}</span>`:""}</div>`;
+    } else {
+      h+=`<div class="unit pick ${here?"here":""}" onclick="startSessionAt('${st}',${idx})">
+          <span class="seqn">${num}</span>
+          <b>${done?'<span class="tick">✓</span> ':""}${esc(e.unit)}</b>
+          ${carded?"":`<span class="tag">basic quiz</span>`}
+          ${e.s?`<span class="tag warn">⚠</span>`:""}
+          ${here?`<span class="tag t2">next up</span>`:""}
+          ${e.ck&&e.ck!=="—"?`<span class="sm dim">${esc(e.ck)}</span>`:""}</div>`;
+    }
+  });
+  if(lastYear!==null) h+=`</div>`;
   $("#seqBody").innerHTML=h;
 }
 
@@ -673,7 +740,7 @@ if(!window.LESSONS){
     `<div class="card"><h2>Content file missing</h2><div class="dim">
      <code>curriculum-data.js</code> must sit in the same folder as this file.</div></div>`;
 } else {
-  const BUILD="2026-09-22e";
+  const BUILD="2026-09-23a";
   const bt=document.getElementById("buildTag"); if(bt) bt.textContent="build "+BUILD;
   renderHome();
 }
