@@ -20,8 +20,8 @@ window.SEQ = {
 1: {
   /* ---------- STORY OF THE WORLD, VOL 1 — 42 chapters ---------- */
   history: [
-    {u:"How Do We Know What Happened?", src:"SOTW Intro — history & archaeology", l:[]},
-    {u:"The Earliest People", src:"SOTW Ch 1 — first nomads become farmers", l:[]},
+    {u:"How Do We Know What Happened?", src:"SOTW Intro — history & archaeology", l:[1001]},
+    {u:"The Earliest People", src:"SOTW Ch 1 — first nomads become farmers", l:[1002]},
     {u:"Egyptians Lived on the Nile", src:"SOTW Ch 2 — two kingdoms, gods of Egypt", l:[46]},
     {u:"The First Writing", src:"SOTW Ch 3 — hieroglyphs and cuneiform", l:[47]},
     {u:"The Old Kingdom of Egypt", src:"SOTW Ch 4 — mummies and pyramids", l:[46]},
@@ -70,9 +70,9 @@ window.SEQ = {
      to completion. Order below is round-robin A→B→C→D, preserving each
      thread's own published order.                                      */
   science: [
-    {u:"Organizing Things into Categories", src:"BFSU A/B-1", l:[]},
-    {u:"Living, Natural, and Human-Made Things", src:"BFSU B-2", l:[]},
-    {u:"Concepts of Energy I: Making Things Go", src:"BFSU C-1", l:[]},
+    {u:"Organizing Things into Categories", src:"BFSU A/B-1", l:[2001]},
+    {u:"Living, Natural, and Human-Made Things", src:"BFSU B-2", l:[2002]},
+    {u:"Concepts of Energy I: Making Things Go", src:"BFSU C-1", l:[2003]},
     {u:"Gravity I: Horizontal and Vertical", src:"BFSU D-1", l:[5]},
     {u:"Solids, Liquids, Gases and Temperature", src:"BFSU A-2", l:[23]},
     {u:"The Plant and Animal Kingdoms", src:"BFSU B-3", l:[]},
