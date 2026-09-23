@@ -99,6 +99,11 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 .copywork{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--gold);
   border-radius:10px;padding:12px 14px;margin:6px 0 16px}
 .copywork .cwtext{font-family:var(--serif);font-size:20px;margin-top:6px;line-height:1.45}
+.unit.pick{cursor:pointer;border-radius:8px;padding:11px 10px;margin:0 -10px;transition:background .12s}
+.unit.pick:hover{background:rgba(255,255,255,.06)}
+.unit.pick:active{background:rgba(255,255,255,.12)}
+.unit.here{background:rgba(194,128,58,.12);border-left:3px solid var(--accent);padding-left:10px}
+.tick{color:var(--good);font-weight:700}
 
 /* ---------- phone ---------- */
 @media (max-width:640px){
@@ -133,7 +138,8 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 <!-- HOME -->
 <section id="home" class="screen on">
   <div class="top">
-    <div><h1>🧭 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills</div></div>
+    <div><h1>🧭 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills
+      <span class="tag" id="buildTag" style="margin-left:6px"></span></div></div>
     <div class="row">
       <button class="btn g sm" onclick="show('seq')">🗺️ Sequence</button>
       <button class="btn g sm" onclick="show('prog')">📈 Progress</button>
@@ -365,6 +371,7 @@ function renderHome(){
     ${n.ck&&n.ck!=="—"?`<div class="sm dim">Cross-reference: ${esc(n.ck)}</div>`:""}
     <div class="row" style="margin-top:14px">
       <button class="btn" onclick="startSession()">▶ Start session</button>
+      <button class="btn g sm" onclick="show('seq')">🗺️ Pick a different lesson</button>
       <button class="btn g sm" onclick="skipSession()">Skip</button>
     </div>`;
 }
@@ -409,9 +416,17 @@ let S=null;
 const BLOCKS=["Warm-up","Teach","Check","Do","Close"];
 function startSession(){
   const n=nextSession(); if(!n)return;
-  S={...n, lesson:LBY[n.lid], block:0, results:{}, narr:{}, big:false, part:0, showAll:false,
-     act:ACTS[n.strand][Math.floor(Math.random()*ACTS[n.strand].length)]};
-  $("#sessTitle").textContent=S.unit;
+  startSessionAt(n.strand, n.idx);
+}
+/* Teach any lesson, in any order. Used by "Start session" and by
+   tapping a lesson in the sequence browser. */
+function startSessionAt(strand, idx){
+  const pl=playlist(strand), e=pl[idx];
+  if(!e || e.lid===null){ toast("That unit isn't written yet"); return; }
+  S={...e, idx, pl, lesson:LBY[e.lid], block:0, results:{}, narr:{}, big:false, part:0, showAll:false,
+     act:ACTS[strand][Math.floor(Math.random()*ACTS[strand].length)]};
+  $("#sessTitle").innerHTML=`${esc(e.unit)}
+    <div class="sm dim" style="font-weight:400">${STRANDS[strand]} · lesson ${idx+1} of ${pl.length}</div>`;
   show("sess"); renderBlock();
 }
 function skipSession(){ const n=nextSession(); if(!n)return; DB.ptr[n.strand]=n.idx+1; DB.count++; save(); renderHome(); }
@@ -448,9 +463,18 @@ function blkWarm(){
   if(!any) h+=`<div class="sm dim">First sessions have nothing to review. This fills up fast.</div>`;
   return h+`</div>`;
 }
-function storyParts(html){ return html.split(/(?=<h3)/).filter(p=>p.trim()); }
+function storyParts(html){
+  let p=html.split(/(?=<h3)/).filter(x=>x.trim());
+  if(p.length<2){                                  // no headings: chunk by paragraphs
+    const ps=html.split(/(?=<p)/).filter(x=>x.trim());
+    if(ps.length>5){ p=[]; for(let i=0;i<ps.length;i+=4) p.push(ps.slice(i,i+4).join("")); }
+  }
+  return p;
+}
 function part(d){
-  S.part=Math.max(0,S.part+d); renderBlock();
+  const n=storyParts(S.lesson.story).length;
+  S.part=Math.min(Math.max(0,(S.part||0)+d), n-1);
+  renderBlock();
   const b=document.getElementById("storyBox"); if(b) b.scrollIntoView({block:"start",behavior:"smooth"});
 }
 function blkTeach(){
@@ -557,7 +581,10 @@ function finishSession(){
   const entries=Object.entries(S.narr).map(([kid,text])=>({kid,text}));
   if(entries.length) DB.log.unshift({date:today(),unit:S.unit,strand:S.strand,lesson:S.lesson.title,entries});
   DB.done[S.lid]=today();
-  DB.ptr[S.strand]=S.idx+1; DB.count++;
+  // only ever move the bookmark forward, so revisiting an earlier
+  // lesson doesn't reset your place in the sequence
+  DB.ptr[S.strand]=Math.max(DB.ptr[S.strand]||0, S.idx+1);
+  DB.count++;
   save();
   const n=Object.keys(S.results).length, r=Object.values(S.results).filter(Boolean).length;
   toast(`Session logged — ${r}/${n} correct`);
@@ -565,24 +592,40 @@ function finishSession(){
 }
 
 /* ---------- sequence browser ---------- */
+let seqFilter="all";
+function setSeqFilter(f){ seqFilter=f; renderSeq(); }
 function renderSeq(){
-  let h=`<div class="card sm dim">Content spine: your 90-lesson Bedtime Curriculum. Units with no lesson attached are
-   <span class="tag gap">gaps</span> — not yet authored; the listed source is where they'll be built from.
-   CKHG material is CC BY-NC-SA 3.0 (attribution · non-commercial · share-alike).</div>`;
-  for(const y of [1,2,3,4]){
-    h+=`<div class="card"><h2>Year ${y}</h2>`;
-    for(const st of ["history","science","body"]){
-      h+=`<div style="margin:14px 0 6px"><span class="tag ${st}">${STRANDS[st]}</span></div>`;
-      (SEQ[y][st]||[]).forEach(u=>{
-        const titles=u.l.map(id=>LBY[id]?LBY[id].title:`#${id}`);
-        h+=`<div class="unit"><b>${esc(u.u)}</b>`;
-        if(u.l.length) h+=`<span class="sm dim">${u.l.map((id,i)=>`#${id} ${esc(titles[i])}`).join(" · ")}</span>`;
-        else h+=`<span class="tag gap">gap</span>`;
-        if(u.s) h+=`<span class="tag warn">⚠</span>`;
-        const sref=u.src||u.ck; if(sref&&sref!=="—") h+=`<span class="sm dim">→ ${esc(sref)}</span>`;
-        h+=`</div>`;
-      });
-    }
+  let h=`<div class="card sm dim" style="margin-bottom:12px">
+    <b style="color:var(--txt)">Tap any lesson to teach it now</b> — you can go back to an earlier one or jump ahead.
+    A ✓ means it's been taught. Teaching an earlier lesson won't lose your place.
+    <div class="row" style="margin-top:10px">
+      ${["all","history","science","body"].map(f=>
+        `<button class="btn ${seqFilter===f?"":"g"} sm" onclick="setSeqFilter('${f}')">${f==="all"?"All":STRANDS[f]}</button>`).join("")}
+    </div></div>`;
+  const strands = seqFilter==="all" ? ["history","science","body"] : [seqFilter];
+  for(const st of strands){
+    const pl=playlist(st), ptr=DB.ptr[st]||0;
+    h+=`<div class="card"><h2><span class="tag ${st}">${STRANDS[st]}</span></h2>`;
+    let lastYear=null;
+    pl.forEach((e,idx)=>{
+      if(e.y!==lastYear){ lastYear=e.y; h+=`<div class="sm dim" style="margin:14px 0 4px;font-weight:700">YEAR ${e.y}</div>`; }
+      const L=e.lid?LBY[e.lid]:null;
+      const done=e.lid&&DB.done[e.lid];
+      const carded=e.lid&&window.KC&&window.KC[e.lid];
+      const here=idx===ptr;
+      if(!L){
+        h+=`<div class="unit"><b>${esc(e.unit)}</b><span class="tag gap">not written</span>
+            ${e.ck&&e.ck!=="—"?`<span class="sm dim">→ ${esc(e.ck)}</span>`:""}</div>`;
+      } else {
+        h+=`<div class="unit pick ${here?"here":""}" onclick="startSessionAt('${st}',${idx})">
+            <b>${done?'<span class="tick">✓</span> ':""}${esc(e.unit)}</b>
+            <span class="sm dim">${esc(L.title)}</span>
+            ${carded?"":`<span class="tag">basic quiz</span>`}
+            ${e.s?`<span class="tag warn">⚠</span>`:""}
+            ${here?`<span class="tag t2">next up</span>`:""}
+            ${e.ck&&e.ck!=="—"?`<span class="sm dim">→ ${esc(e.ck)}</span>`:""}</div>`;
+      }
+    });
     h+=`</div>`;
   }
   $("#seqBody").innerHTML=h;
@@ -629,7 +672,11 @@ if(!window.LESSONS){
   document.querySelector(".wrap").innerHTML=
     `<div class="card"><h2>Content file missing</h2><div class="dim">
      <code>curriculum-data.js</code> must sit in the same folder as this file.</div></div>`;
-} else renderHome();
+} else {
+  const BUILD="2026-09-22e";
+  const bt=document.getElementById("buildTag"); if(bt) bt.textContent="build "+BUILD;
+  renderHome();
+}
 </script>
 </body>
 </html>
