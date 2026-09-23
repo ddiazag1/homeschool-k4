@@ -7,9 +7,11 @@ global.window = {};
 require('./curriculum-data.js');
 require('./original-lessons.js');
 require('./original-lessons-2.js');
+require('./original-lessons-3.js');
 require('./knowledge-cards.js');
 require('./knowledge-cards-2.js');
 require('./knowledge-cards-3.js');
+require('./knowledge-cards-4.js');
 require('./sequence.js');
 
 const S = window.SEQ, KC = window.KC, L = {};
