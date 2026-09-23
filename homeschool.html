@@ -4,21 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Homeschool — K–4 Enrichment</title>
-<meta name="theme-color" content="#0f1117">
+<meta name="theme-color" content="#12130f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Homeschool">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f1117; --panel:#161a24; --panel2:#1d2230; --line:#2a3040;
-  --txt:#e8ecf5; --dim:#8b93a7; --accent:#6c8cff; --good:#3ddc84; --bad:#ff5d6c;
-  --gold:#ffc83d; --hist:#e0803c; --sci:#3dc9d4; --body:#c77dff;
+  --bg:#12130f; --panel:#1b1d17; --panel2:#232620; --line:#343830;
+  --txt:#eceadf; --dim:#9a9a8c; --accent:#c2803a; --good:#7fa650; --bad:#c05b4d;
+  --gold:#d8a53c; --hist:#c2803a; --sci:#4f8f8a; --body:#9a7bb0;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Lexend","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--txt);
-  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.55}
+  font-family:var(--sans);font-weight:300;line-height:1.6;letter-spacing:.005em}
+h1,h2,h3,.logo,.story h2,.story h3{font-family:var(--serif);font-weight:700;letter-spacing:-.01em}
 .wrap{max-width:1000px;margin:0 auto;padding:22px 18px 70px}
 .screen{display:none}.screen.on{display:block;animation:f .25s}
 @keyframes f{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
@@ -29,18 +35,18 @@ h1{font-size:26px;margin:0}h2{font-size:20px;margin:0 0 12px}
   padding:11px 18px;border-radius:10px;font-size:15px;transition:filter .12s}
 .btn:hover{filter:brightness(1.12)}
 .btn.g{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--txt)}
-.btn.ok{background:var(--good);color:#04240f}.btn.no{background:var(--bad)}
+.btn.ok{background:var(--good);color:#12230a}.btn.no{background:var(--bad)}
 .btn.sm{padding:7px 12px;font-size:13px}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
 .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.08);color:var(--dim)}
 .tag.history{background:rgba(224,128,60,.18);color:var(--hist)}
-.tag.science{background:rgba(61,201,212,.18);color:var(--sci)}
-.tag.body{background:rgba(199,125,255,.18);color:var(--body)}
-.tag.gap{background:rgba(255,93,108,.18);color:var(--bad)}
-.tag.warn{background:rgba(255,200,61,.18);color:var(--gold)}
-input,select,textarea{font:inherit;background:#0d1017;border:1px solid var(--line);color:var(--txt);
+.tag.science{background:rgba(79,143,138,.22);color:var(--sci)}
+.tag.body{background:rgba(154,123,176,.25);color:var(--body)}
+.tag.gap{background:rgba(192,91,77,.22);color:var(--bad)}
+.tag.warn{background:rgba(216,165,60,.2);color:var(--gold)}
+input,select,textarea{font:inherit;background:#0f110c;border:1px solid var(--line);color:var(--txt);
   padding:10px 12px;border-radius:9px;width:100%}
 input:focus,textarea:focus,select:focus{outline:0;border-color:var(--accent)}
 label{display:block;font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;
@@ -52,14 +58,14 @@ label{display:block;font-size:12px;font-weight:700;color:var(--dim);text-transfo
 .kid.add{border-style:dashed;cursor:pointer;display:flex;flex-direction:column;justify-content:center;
   align-items:center;min-height:120px;color:var(--dim)}
 .avpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;margin-top:6px}
-.avpick div{font-size:26px;text-align:center;padding:6px 0;border-radius:9px;cursor:pointer;background:#0d1017;border:2px solid transparent}
+.avpick div{font-size:26px;text-align:center;padding:6px 0;border-radius:9px;cursor:pointer;background:#0f110c;border:2px solid transparent}
 .avpick div.on{border-color:var(--accent)}
 .steps{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .step{flex:1;min-width:90px;padding:8px 6px;border-radius:9px;background:var(--panel2);border:1px solid var(--line);
   font-size:11px;font-weight:700;text-align:center;color:var(--dim)}
 .step.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.step.done{color:var(--good);border-color:rgba(61,220,132,.4)}
-.story{background:#12151d;border:1px solid var(--line);border-radius:12px;padding:22px;
+.step.done{color:var(--good);border-color:rgba(127,166,80,.45)}
+.story{background:#191b15;border:1px solid var(--line);border-radius:12px;padding:22px;
   max-height:58vh;overflow-y:auto;font-size:18px}
 .story.big{font-size:22px;line-height:1.75}
 .story h2{font-size:24px;color:var(--gold)}.story h3{font-size:19px;color:var(--accent);margin-top:20px}
@@ -67,12 +73,12 @@ label{display:block;font-size:12px;font-weight:700;color:var(--dim);text-transfo
 .story .image-caption{font-size:13px;color:var(--dim);margin-top:-4px}
 .q{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
 .q .qt{font-size:18px;font-weight:700;margin-bottom:10px}
-.opt{display:block;width:100%;text-align:left;background:#0d1017;border:1px solid var(--line);color:var(--txt);
+.opt{display:block;width:100%;text-align:left;background:#0f110c;border:1px solid var(--line);color:var(--txt);
   padding:11px 14px;border-radius:9px;margin-bottom:7px;cursor:pointer;font:inherit}
 .opt:hover{border-color:var(--accent)}
-.opt.right{background:rgba(61,220,132,.2);border-color:var(--good)}
-.opt.wrong{background:rgba(255,93,108,.2);border-color:var(--bad)}
-.bar{height:7px;background:#0d1017;border-radius:7px;overflow:hidden;margin-top:5px}
+.opt.right{background:rgba(127,166,80,.25);border-color:var(--good)}
+.opt.wrong{background:rgba(192,91,77,.25);border-color:var(--bad)}
+.bar{height:7px;background:#0f110c;border-radius:7px;overflow:hidden;margin-top:5px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--good),var(--accent))}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
@@ -85,9 +91,9 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 
 .fact{padding:9px 0;border-bottom:1px solid var(--line);font-size:17px}
 .fact:last-child{border-bottom:0}
-.tag.t1{background:rgba(61,220,132,.18);color:var(--good)}
-.tag.t2{background:rgba(108,140,255,.2);color:var(--accent)}
-.tag.t3{background:rgba(199,125,255,.2);color:var(--body)}
+.tag.t1{background:rgba(127,166,80,.22);color:var(--good)}
+.tag.t2{background:rgba(194,128,58,.2);color:var(--accent)}
+.tag.t3{background:rgba(154,123,176,.25);color:var(--body)}
 .ans{color:var(--good);font-weight:700;font-size:15px;margin:-4px 0 10px}
 .ansinline{color:var(--good);font-weight:700}
 
@@ -124,11 +130,11 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 <!-- HOME -->
 <section id="home" class="screen on">
   <div class="top">
-    <div><h1>🏫 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills</div></div>
+    <div><h1>🧭 Homeschool</h1><div class="dim sm">K–4 enrichment · science · history & geography · body &amp; life skills</div></div>
     <div class="row">
-      <button class="btn g sm" onclick="show('seq')">📚 Sequence</button>
-      <button class="btn g sm" onclick="show('prog')">📊 Progress</button>
-      <button class="btn g sm" onclick="show('log')">📓 Logbook</button>
+      <button class="btn g sm" onclick="show('seq')">🗺️ Sequence</button>
+      <button class="btn g sm" onclick="show('prog')">📈 Progress</button>
+      <button class="btn g sm" onclick="show('log')">🪶 Logbook</button>
     </div>
   </div>
 
@@ -145,7 +151,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
   <div class="top">
     <button class="btn g sm" onclick="quitSession()">← Home</button>
     <div id="sessTitle" style="font-weight:800"></div>
-    <button class="btn g sm" onclick="toggleBig()">🔎 Text size</button>
+    <button class="btn g sm" onclick="toggleBig()">Aa Text size</button>
   </div>
   <div class="steps" id="steps"></div>
   <div id="blockBody"></div>
@@ -157,19 +163,19 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 
 <!-- SEQUENCE -->
 <section id="seq" class="screen">
-  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📚 Scope &amp; Sequence</h1><span></span></div>
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>🗺️ Scope &amp; Sequence</h1><span></span></div>
   <div id="seqBody"></div>
 </section>
 
 <!-- PROGRESS -->
 <section id="prog" class="screen">
-  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📊 Progress</h1><span></span></div>
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📈 Progress</h1><span></span></div>
   <div id="progBody"></div>
 </section>
 
 <!-- LOGBOOK -->
 <section id="log" class="screen">
-  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>📓 Narration logbook</h1><span></span></div>
+  <div class="top"><button class="btn g sm" onclick="show('home')">← Home</button><h1>🪶 Narration logbook</h1><span></span></div>
   <div id="logBody"></div>
 </section>
 
@@ -202,6 +208,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 </div>
 <script src="curriculum-data.js"></script>
 <script src="knowledge-cards.js"></script>
+<script src="sequence.js"></script>
 <script>
 /* ============================================================
    Homeschool — K–4 enrichment, one-stop app
@@ -209,7 +216,7 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
    Cross-references: CKHG (CC BY-NC-SA 3.0), SOTW (optional).
    ============================================================ */
 
-const AV = ["🦊","🐯","🐼","🐸","🐧","🦁","🚀","⚡","🦉","🐵","🐲","🦕","🐙","🦈","🌟","🤖"];
+const AV = ["🦅","🐺","🦌","🦉","🐢","🐝","🦋","🐙","🦁","🐘","🦒","🐳","🌿","⭐","🔭","⚓"];
 const TIERS = [
   {id:1, name:"T1 — Name & Notice",      hint:"identify, sort, recall"},
   {id:2, name:"T2 — Explain & Sequence", hint:"explain why, order, label"},
@@ -218,133 +225,7 @@ const TIERS = [
 const STRANDS = {history:"History & Geography", science:"Science", body:"Body, Health & Life Skills"};
 const ROTATION = ["science","science","history","history","body"];   // Mon–Fri
 
-/* ---------- the 4-year sequence (see SCOPE-AND-SEQUENCE.md) ---------- */
-const SEQ = {
- 1:{
-  history:[
-   {u:"Maps & Our World", l:[], ck:"CKHG K U1 · G1 U1 · G4 U1"},
-   {u:"Mesopotamia", l:[47], ck:"CKHG G1 U2"},
-   {u:"Ancient Egypt", l:[46], ck:"CKHG G1 U3"},
-   {u:"Ancient Israel & World Religions", l:[], ck:"CKHG G1 U4", s:1},
-   {u:"Ancient India", l:[51], ck:"CKHG G2 U1"},
-   {u:"Ancient China", l:[48], ck:"CKHG G2 U2 · G4 U6"},
-   {u:"Phoenicia & the Alphabet", l:[52], ck:"—"},
-   {u:"Ancient Greece", l:[49], ck:"CKHG G2 U4"},
-   {u:"Persia & Alexander", l:[53,54], ck:"—"},
-   {u:"Ancient Rome", l:[50], ck:"CKHG G3 U2"},
-   {u:"Early Americas", l:[55,56,57], ck:"CKHG G1 U5 · G5 U2"},
-   {u:"World Rivers & Civilization", l:[], ck:"CKHG G3 U1"}],
-  science:[
-   {u:"Thinking Like a Scientist", l:[45]},
-   {u:"Living Things", l:[2]},
-   {u:"Plants", l:[29,30]},
-   {u:"Animals & Classification", l:[31,32]},
-   {u:"Habitats", l:[6,35,36]},
-   {u:"Life Cycles", l:[7]},
-   {u:"Food Chains & Energy", l:[8]},
-   {u:"Great Animal Journeys", l:[40]},
-   {u:"Deep Time & Fossils", l:[33,4], s:1},
-   {u:"Microbes & Soil", l:[43,44]},
-   {u:"Heredity & Traits", l:[], ck:"CKSci + original"},
-   {u:"Ecosystems & Fresh Water", l:[34,41]}],
-  body:[
-   {u:"Skeleton & Muscles", l:[9]},
-   {u:"Heart, Lungs & Blood", l:[], ck:"NIH/NLM + original"},
-   {u:"Food & Digestion", l:[10]},
-   {u:"The Five Senses", l:[11]},
-   {u:"Brain & Sleep", l:[], ck:"NIH + your expertise"},
-   {u:"Safety & First Aid", l:[], ck:"Red Cross/CDC + original"}]},
- 2:{
-  history:[
-   {u:"Feudal Japan", l:[58], ck:"CKHG G5 U8"},
-   {u:"The Vikings", l:[59], ck:"CKHG G3 U3"},
-   {u:"Castles & Knights", l:[60], ck:"CKHG G4 U3"},
-   {u:"Islamic Golden Age", l:[61], ck:"CKHG G4 U4", s:1},
-   {u:"The Mongols", l:[62], ck:"—"},
-   {u:"The Black Death", l:[63], ck:"—"},
-   {u:"Medieval African Kingdoms", l:[], ck:"CKHG G4 U5"},
-   {u:"Early Russia", l:[], ck:"CKHG G5 U7"},
-   {u:"Canada & the North", l:[], ck:"CKHG G3 U5"}],
-  science:[
-   {u:"The Sun & Its Family", l:[1]},
-   {u:"Water & Rain", l:[3]},
-   {u:"Volcanoes", l:[12]},
-   {u:"Earthquakes", l:[13]},
-   {u:"The Ocean", l:[14]},
-   {u:"How Mountains Are Made", l:[15]},
-   {u:"Seasons", l:[16]},
-   {u:"Wild Weather", l:[17]},
-   {u:"Snow & Ice", l:[18]},
-   {u:"The Moon", l:[19]},
-   {u:"Stars & Constellations", l:[20]},
-   {u:"Space Travel", l:[21]},
-   {u:"Galaxies & the Universe", l:[37]},
-   {u:"Hot & Cold", l:[39]}],
-  body:[
-   {u:"Nervous System & Senses", l:[], ck:"NIH + original"},
-   {u:"Germs & Immunity", l:[], ck:"CDC + original"},
-   {u:"Fitness & Movement", l:[], ck:"original"},
-   {u:"Emotions & Self-Regulation", l:[], ck:"original"},
-   {u:"Cooking & Kitchen Skills", l:[], ck:"original"},
-   {u:"Digital Citizenship", l:[], ck:"original"}]},
- 3:{
-  history:[
-   {u:"The Renaissance", l:[64], ck:"CKHG G5 U4"},
-   {u:"Leonardo da Vinci", l:[65], ck:"—"},
-   {u:"Age of Exploration", l:[66,67], ck:"CKHG G5 U3"},
-   {u:"The Printing Press", l:[68], ck:"—"},
-   {u:"The Reformation", l:[69], ck:"CKHG G5 U5", s:1},
-   {u:"Mughal India", l:[70], ck:"—"},
-   {u:"The Ottoman Empire", l:[71], ck:"—"},
-   {u:"England's Golden Age", l:[], ck:"CKHG G5 U6"},
-   {u:"Colonial America", l:[72], ck:"CKHG G3 U7 · G1 U7"},
-   {u:"The American Revolution", l:[73], ck:"CKHG G4 U7 · G1 U8"},
-   {u:"The Constitution", l:[], ck:"CKHG G4 U8 · G2 U6"}],
-  science:[
-   {u:"Gravity & Magnetism", l:[5]},
-   {u:"Tiny Building Blocks", l:[22]},
-   {u:"Solid, Liquid & Gas", l:[23]},
-   {u:"Mixtures", l:[24]},
-   {u:"Light & Color", l:[25]},
-   {u:"Sound", l:[26]},
-   {u:"Simple Machines", l:[27]},
-   {u:"Electricity", l:[28]},
-   {u:"Chemical Change", l:[38]},
-   {u:"Float or Sink", l:[42]}],
-  body:[
-   {u:"Growth & Change", l:[], ck:"NIH + original"},
-   {u:"Nutrition Deep-Dive", l:[], ck:"CDC + original"},
-   {u:"Sports Science", l:[], ck:"original"},
-   {u:"Risk & Judgment", l:[], ck:"original"},
-   {u:"Outdoor & Emergency Skills", l:[], ck:"original"},
-   {u:"Money & Personal Finance", l:[], ck:"original"}]},
- 4:{
-  history:[
-   {u:"The French Revolution", l:[74], ck:"—"},
-   {u:"The Age of Machines", l:[75], ck:"—"},
-   {u:"Napoleon", l:[76], ck:"—"},
-   {u:"Abolition", l:[77], ck:"CKHG G4 U10", s:1},
-   {u:"A Nation Divided", l:[78], ck:"CKHG G5 U11 · G2 U9", s:1},
-   {u:"Westward Expansion", l:[79], ck:"CKHG G5 U10 · G5 U12 · G1 U9"},
-   {u:"The Scramble for Africa", l:[80], ck:"—", s:1},
-   {u:"World War I", l:[81], ck:"—", s:1},
-   {u:"The Jazz Age", l:[82], ck:"—"},
-   {u:"World War II", l:[83,84], ck:"—", s:1},
-   {u:"The Cold War", l:[85], ck:"—"},
-   {u:"The Race to the Moon", l:[86], ck:"—"},
-   {u:"Marching for Justice", l:[87], ck:"CKHG G2 U11", s:1},
-   {u:"The Wall Comes Down", l:[88], ck:"—"},
-   {u:"The Information Revolution", l:[89], ck:"—"},
-   {u:"Connecting the Dots", l:[90], ck:"—"},
-   {u:"Civics: How Government Works", l:[], ck:"CKHG G1 U10 · G4 U11"},
-   {u:"Immigration & Citizenship", l:[], ck:"CKHG G2 U10"},
-   {u:"Understanding Economics", l:[], ck:"CKHG G2 U12 · G5 U14"}],
-  science:[
-   {u:"Engineering & Design", l:[], ck:"CKSci + original"},
-   {u:"Computer Science", l:[], ck:"CKSci + original"}],
-  body:[
-   {u:"Review & Capstone", l:[], ck:"original"}]}
-};
+const SEQ = window.SEQ || {};
 
 /* ---------- activity bank ---------- */
 const ACTS = {
@@ -390,8 +271,8 @@ function show(id){$$(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).c
 function playlist(strand){
   const out=[];
   for(const y of [1,2,3,4]) for(const unit of (SEQ[y][strand]||[]))
-    if(unit.l.length) unit.l.forEach(id=>out.push({y,strand,unit:unit.u,ck:unit.ck,s:unit.s,lid:id}));
-    else out.push({y,strand,unit:unit.u,ck:unit.ck,s:unit.s,lid:null});
+    if(unit.l.length) unit.l.forEach(id=>out.push({y,strand,unit:unit.u,ck:unit.src||unit.ck,s:unit.s,lid:id}));
+    else out.push({y,strand,unit:unit.u,ck:unit.src||unit.ck,s:unit.s,lid:null});
   return out;
 }
 function nextSession(){
@@ -569,7 +450,7 @@ function blkTeach(){
   const all=S.showAll||parts.length<2;
   const body=all?L.story:parts[Math.min(S.part,parts.length-1)];
   const core = kc&&kc.length ? `<div class="card" style="margin-top:14px;background:var(--panel2)">
-      <h2>🎯 Key facts <span class="sm dim">${kc.length} · teach these explicitly · 3–4 min</span></h2>
+      <h2>🔑 Key facts <span class="sm dim">${kc.length} · teach these explicitly · 3–4 min</span></h2>
       <div class="sm dim" style="margin-bottom:10px">These are what get quizzed and spaced. Say each one plainly, point at the picture, move on. Tier shows who is held to it.</div>
       ${kc.map(c=>`<div class="fact"><span class="tag t${c.t}">T${c.t}+</span> ${esc(c.f)}</div>`).join("")}
     </div>` : `<div class="sm dim" style="margin-top:12px">No knowledge card for this lesson yet — the check will fall back to the story's own quiz.</div>`;
@@ -582,8 +463,8 @@ function blkTeach(){
         <button class="btn g sm" ${S.part>=parts.length-1?"disabled":""} onclick="part(1)">▶</button>
       </div>`}
     <div class="row" style="margin-top:10px">
-      <button class="btn g sm" onclick="S.showAll=!S.showAll;renderBlock()">${all?"📑 Read in parts":"📖 Whole story"}</button>
-      <button class="btn g sm" onclick="toggleBig()">🔎 ${S.big?"Smaller":"Bigger"} text</button>
+      <button class="btn g sm" onclick="S.showAll=!S.showAll;renderBlock()">${all?"Read in parts":"Whole story"}</button>
+      <button class="btn g sm" onclick="toggleBig()">Aa ${S.big?"Smaller":"Bigger"} text</button>
     </div>
     <div class="sm dim" style="margin-top:8px">Images load from Wikimedia and need internet; the text works offline.</div></div>${core}`;
 }
@@ -633,7 +514,7 @@ function blkDo(){
   return `<div class="card"><h2>4 · Do <span class="sm dim">20 min</span></h2>
     <div style="font-size:20px;font-weight:700;margin:10px 0">${esc(S.act)}</div>
     <div class="sm dim">Investigation comes after the explanation, never before — novices need the concept first.</div>
-    <div class="row" style="margin-top:14px"><button class="btn g sm" onclick="S.act=ACTS[S.strand][Math.floor(Math.random()*ACTS[S.strand].length)];renderBlock()">🎲 Different activity</button></div></div>`;
+    <div class="row" style="margin-top:14px"><button class="btn g sm" onclick="S.act=ACTS[S.strand][Math.floor(Math.random()*ACTS[S.strand].length)];renderBlock()">⟳ Different activity</button></div></div>`;
 }
 function blkClose(){
   let h=`<div class="card"><h2>5 · Close <span class="sm dim">3 min · narration</span></h2>
@@ -671,7 +552,7 @@ function renderSeq(){
         if(u.l.length) h+=`<span class="sm dim">${u.l.map((id,i)=>`#${id} ${esc(titles[i])}`).join(" · ")}</span>`;
         else h+=`<span class="tag gap">gap</span>`;
         if(u.s) h+=`<span class="tag warn">⚠</span>`;
-        if(u.ck&&u.ck!=="—") h+=`<span class="sm dim">→ ${esc(u.ck)}</span>`;
+        const sref=u.src||u.ck; if(sref&&sref!=="—") h+=`<span class="sm dim">→ ${esc(sref)}</span>`;
         h+=`</div>`;
       });
     }
