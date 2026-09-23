@@ -1,0 +1,123 @@
+# Contents & Build Status — Year 1
+
+Auto-generated from `sequence.js` + `knowledge-cards.js`. Status key:
+
+| Status | Meaning |
+|---|---|
+| **READY** | Read-aloud + knowledge card + tiered retrieval. Runs tonight. |
+| **STORY** | Read-aloud exists; no knowledge card yet, falls back to 3 quiz items. |
+| **TODO** | Nothing written. Skipped by the app when picking a session. |
+
+## History & Geography — Story of the World Vol 1
+
+**43 units — 6 ready, 7 story-only, 30 to write**
+
+| # | Unit | Source | Existing content | Status |
+|---|---|---|---|---|
+| 1 | How Do We Know What Happened? | SOTW Intro — history & archaeology | — | **TODO** |
+| 2 | The Earliest People | SOTW Ch 1 — first nomads become farmers | — | **TODO** |
+| 3 | Egyptians Lived on the Nile | SOTW Ch 2 — two kingdoms, gods of Egypt | #46 The River That Built a Kingdom | **READY** |
+| 4 | The First Writing | SOTW Ch 3 — hieroglyphs and cuneiform | #47 Between Two Rivers | **READY** |
+| 5 | The Old Kingdom of Egypt | SOTW Ch 4 — mummies and pyramids | #46 The River That Built a Kingdom | **READY** |
+| 6 | The First Sumerian Dictator | SOTW Ch 5 — Sargon and the Akkadians | — | **TODO** |
+| 7 | The Jewish People | SOTW Ch 6 — Abraham, Joseph | — | **TODO** |
+| 8 | Hammurabi and the Babylonians | SOTW Ch 7 — Hammurabi's Code | — | **TODO** |
+| 9 | The Assyrians | SOTW Ch 8 — Shamshi-Adad, Gilgamesh | — | **TODO** |
+| 10 | The First Cities of India | SOTW Ch 9 — the river-road, Mohenjo-Daro | #51 Cities by the River | **READY** |
+| 11 | The Far East: Ancient China | SOTW Ch 10 — Lei Zu, pictograms, farming | #48 The Great Wall and the Silk Road | **READY** |
+| 12 | Ancient Africa | SOTW Ch 11 — West Africa, Anansi tales | — | **TODO** |
+| 13 | Life in Early Crete | SOTW Ch 12 — bull-jumpers, Minos, the Minoans | — | **TODO** |
+| 14 | The Middle Kingdom of Egypt | SOTW Ch 13 — Nubia, the Hyksos | — | **TODO** |
+| 15 | The New Kingdom of Egypt | SOTW Ch 14 — Hatshepsut, Amenhotep, Tut | — | **TODO** |
+| 16 | The Israelites Leave Egypt | SOTW Ch 15 — Moses, the Exodus | — | **TODO** |
+| 17 | The Early Greeks | SOTW Ch 16 — Mycenaeans, the Greek Dark Ages | — | **TODO** |
+| 18 | The Phoenicians | SOTW Ch 17 — traders, the founding of Carthage | #52 The People Who Gave Us Letters | **STORY** |
+| 19 | The Return of Assyria | SOTW Ch 18 — Ashurbanipal, the Library of Nineveh | — | **TODO** |
+| 20 | Greece Gets Civilized Again | SOTW Ch 19 — alphabet, Homer, first Olympics | #49 The Olympic Flame | **STORY** |
+| 21 | Sparta and Athens | SOTW Ch 20 — two ways to live; Draco and Solon | — | **TODO** |
+| 22 | The Greek Gods | SOTW Ch 21 — the Golden Apple | — | **TODO** |
+| 23 | The Rise of Rome | SOTW Ch 22 — Romulus and Remus | #50 All Roads Lead to Rome | **STORY** |
+| 24 | Babylon Takes Over Again | SOTW Ch 23 — Nebuchadnezzar, Hanging Gardens | — | **TODO** |
+| 25 | The Medes and the Persians | SOTW Ch 24 — Cyrus the Great | #53 The Empire of Kings | **STORY** |
+| 26 | The Aryans of India | SOTW Ch 25 — the Ganges, castes, Siddhartha | — | **TODO** |
+| 27 | Writing, Fighting and Thinking in China | SOTW Ch 26 — calligraphy, Confucius | — | **TODO** |
+| 28 | The Wars of the Greeks | SOTW Ch 27 — Persia, then each other | — | **TODO** |
+| 29 | Alexander the Great | SOTW Ch 28 — Philip, the invasions, the death | #54 Alexander the Great | **STORY** |
+| 30 | The Mauryan Empire of India | SOTW Ch 29 — the empire united, Jataka tales | — | **TODO** |
+| 31 | The People of the Americas | SOTW Ch 30 — Nazca lines, Olmec heads | #55 Cities in the Jungle | **STORY** |
+| 32 | The Roman Republic | SOTW Ch 31 — builders, gods, gladiators | #50 All Roads Lead to Rome | **STORY** |
+| 33 | Rome's War with Carthage | SOTW Ch 32 — the Punic Wars | — | **TODO** |
+| 34 | The First Dynasties of China | SOTW Ch 33 — First Emperor, Great Wall, Silk Road | #48 The Great Wall and the Silk Road | **READY** |
+| 35 | The Rise of Julius Caesar | SOTW Ch 34 — kidnapped, the consuls, the Celts | — | **TODO** |
+| 36 | Caesar, Ruler of Rome | SOTW Ch 35 — the Rubicon, Cleopatra, Augustus | — | **TODO** |
+| 37 | Israel Under Roman Rule | SOTW Ch 36 — Herod, a prophet named Jesus | — | **TODO** |
+| 38 | Rome and the Christians | SOTW Ch 37 — Nero, the catacombs | — | **TODO** |
+| 39 | Rome Begins to Weaken | SOTW Ch 38 — Britain, division, a Christian emperor | — | **TODO** |
+| 40 | Troubles in China | SOTW Ch 39 — the end of the Han, Three Kingdoms | — | **TODO** |
+| 41 | Lands East of China | SOTW Ch 40 — Korea's three kingdoms, Yamato Japan | — | **TODO** |
+| 42 | The Attacking Barbarians | SOTW Ch 41 — Stilicho, Visigoths, Attila | — | **TODO** |
+| 43 | The End of Rome | SOTW Ch 42 — the last emperor, the gifts of Rome | — | **TODO** |
+
+## Science — BFSU Volume I (K-2)
+
+**43 units — 5 ready, 14 story-only, 24 to write**
+
+| # | Unit | Source | Existing content | Status |
+|---|---|---|---|---|
+| 1 | Organizing Things into Categories | BFSU A/B-1 | — | **TODO** |
+| 2 | Living, Natural, and Human-Made Things | BFSU B-2 | — | **TODO** |
+| 3 | Concepts of Energy I: Making Things Go | BFSU C-1 | — | **TODO** |
+| 4 | Gravity I: Horizontal and Vertical | BFSU D-1 | #5 The Invisible Force | **STORY** |
+| 5 | Solids, Liquids, Gases and Temperature | BFSU A-2 | #23 Solid, Liquid, and Gas | **STORY** |
+| 6 | The Plant and Animal Kingdoms | BFSU B-3 | — | **TODO** |
+| 7 | Sound, Vibrations, and Energy | BFSU C-2 | #26 How Sound Travels | **STORY** |
+| 8 | Day and Night and the Earth's Rotation | BFSU D-2 | — | **TODO** |
+| 9 | Air Is a Substance; the Atmosphere | BFSU A-3 | — | **TODO** |
+| 10 | Life Cycles | BFSU B-4 | #7 Amazing Life Cycles | **STORY** |
+| 11 | Energy II: Kinetic and Potential | BFSU C-3 | — | **TODO** |
+| 12 | Reading and Drawing Maps | BFSU D-3 | — | **TODO** |
+| 13 | Matter I: Its Particulate Nature | BFSU A-4 | #22 The Tiny Building Blocks | **STORY** |
+| 14 | Why Plants and Animals Live Where They Do | BFSU B-4A | #6 Where Animals Live | **STORY** |
+| 15 | Energy and Force | BFSU C-3A | — | **TODO** |
+| 16 | North, East, South, and West | BFSU D-3A | — | **TODO** |
+| 17 | Distinguishing Materials | BFSU A-5 | — | **TODO** |
+| 18 | What Is a Species? | BFSU B-4B | — | **TODO** |
+| 19 | Energy III: Matter versus Energy | BFSU C-4 | — | **TODO** |
+| 20 | Land Forms and Major Biomes | BFSU D-4 | #35 Lands of Sand and Sun; #36 The Frozen Ends of the Earth | **STORY** |
+| 21 | Magnets and Magnetic Fields | BFSU A-5A | #5 The Invisible Force | **STORY** |
+| 22 | Adaptations, Food Chains, Energy Flow | BFSU B-5 | #8 Who Eats Whom? | **STORY** |
+| 23 | Inertia | BFSU C-5 | — | **TODO** |
+| 24 | Time and the Earth's Turning | BFSU D-5 | — | **TODO** |
+| 25 | Matter II: Air Pressure and Vacuums | BFSU A-6 | — | **TODO** |
+| 26 | Adaptations and Survival | BFSU B-5A | — | **TODO** |
+| 27 | Friction | BFSU C-6 | — | **TODO** |
+| 28 | Seasonal Changes and the Earth's Orbit | BFSU D-6 | #16 Why We Have Seasons | **STORY** |
+| 29 | Air: A Mixture of Gases | BFSU A-7 | — | **TODO** |
+| 30 | How Animals Move I: Skeleton and Muscle | BFSU B-6 | #9 Your Amazing Skeleton | **READY** |
+| 31 | Push Pushes Back | BFSU C-7 | — | **TODO** |
+| 32 | Gravity II: Rate of Fall; Mass versus Weight | BFSU D-7 | — | **TODO** |
+| 33 | Matter III: Evaporation and Condensation | BFSU A-8 | #3 Why Does It Rain? | **STORY** |
+| 34 | How Animals Move II: Body Designs and Phyla | BFSU B-7 | #31 The World of Insects | **READY** |
+| 35 | Rocks and Fossils | BFSU D-8 | #4 The Rock That Tells Time; #33 Return of the Dinosaurs | **STORY** |
+| 36 | Matter IV: Dissolving and Crystallization | BFSU A-9 | #24 Mixing Things Together | **STORY** |
+| 37 | How Animals Move III: The Nervous System | BFSU B-8 | — | **TODO** |
+| 38 | Rocks, Minerals, Crystals, Dirt and Soil | BFSU A-10 | #44 The World Beneath Your Feet | **STORY** |
+| 39 | How Animals Move IV: Energy to Run the Body | BFSU B-9 | #10 The Journey of Food; #2 The Tiny World Inside You | **READY** |
+| 40 | Plant Science I: Structure and Reproduction | BFSU B-10 | #29 How Plants Make Food | **READY** |
+| 41 | Plant Science II: Germination and Growth | BFSU B-11 | #30 The Secret Life of Trees | **READY** |
+| 42 | Plants, Soil, Water and Erosion | BFSU B-12 | — | **TODO** |
+| 43 | Resources: Developing an Overview | BFSU E-1 | — | **TODO** |
+
+## Body, Health & Life Skills — original
+
+**6 units — 2 ready, 1 story-only, 3 to write**
+
+| # | Unit | Source | Existing content | Status |
+|---|---|---|---|---|
+| 1 | Skeleton & Muscles | original · NIH | #9 Your Amazing Skeleton | **READY** |
+| 2 | Heart, Lungs & Blood | original · NIH | — | **TODO** |
+| 3 | Food & Digestion | original · CDC | #10 The Journey of Food | **READY** |
+| 4 | The Five Senses | original | #11 The Five Senses | **STORY** |
+| 5 | Brain & Sleep | original · NIH | — | **TODO** |
+| 6 | Safety & First Aid | original · Red Cross | — | **TODO** |
+
