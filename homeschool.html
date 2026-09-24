@@ -233,11 +233,14 @@ th{font-size:11px;text-transform:uppercase;color:var(--dim);letter-spacing:.7px}
 <script src="original-lessons-2.js"></script>
 <script src="original-lessons-3.js"></script>
 <script src="original-lessons-4.js"></script>
+<script src="original-lessons-5.js"></script>
 <script src="knowledge-cards.js"></script>
 <script src="knowledge-cards-2.js"></script>
 <script src="knowledge-cards-3.js"></script>
 <script src="knowledge-cards-4.js"></script>
 <script src="knowledge-cards-5.js"></script>
+<script src="knowledge-cards-6.js"></script>
+<script src="knowledge-cards-7.js"></script>
 <script src="sequence.js"></script>
 <script>
 /* ============================================================
@@ -742,7 +745,7 @@ if(!window.LESSONS){
     `<div class="card"><h2>Content file missing</h2><div class="dim">
      <code>curriculum-data.js</code> must sit in the same folder as this file.</div></div>`;
 } else {
-  const BUILD="2026-09-23b";
+  const BUILD="2026-09-23d";
   const bt=document.getElementById("buildTag"); if(bt) bt.textContent="build "+BUILD;
   renderHome();
 }
